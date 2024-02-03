@@ -48,6 +48,16 @@ A continuación se presentan la agenda propuesta para completar el proyecto, con
 ![imagenformula](agendapropuesta.jpg)  
 Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede sufrir de modifcaciones en la marcha.
 
+## Definición de las clases  y métodos.
+Clase: Usuario
+atributos: nombre, identificación, tiene cuenta en dólares, tiene cuenta en colones
+métodos: transferencia, depósito, retiro, CDP
+
+
+Clase: Préstamo
+atributos: identificación de usuario, monto, tasa de interés
+métodos: crear préstamo, abonar a préstamo existente
+
 ## Prototipo del menu
 
 ### Seleccione el modo
