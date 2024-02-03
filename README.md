@@ -8,6 +8,11 @@ Los préstamos hipotecarios son de largo plazo que se utilizan para financiar la
 Finalmente los préstamos prendarios, los cuales son garantizados por un bien tangible, como un automóvil, una motocicleta, una embarcación, maquinaria u otros activos similares. El bien actúa como garantía del préstamo y, en caso de incumplimiento del prestatario, el prestamista tiene el derecho de tomar posesión del bien para recuperar la deuda. Estos préstamos suelen tener tasas de interés más bajas que los préstamos personales no garantizados, ya que ofrecen una mayor seguridad para el prestamista.
 Entonces se puede ver que los créditos personales son a corto plazo y con un interés generalmente mayor que los préstamos prendarios e hipotecarios, en cambio los préstamos prendarios e hipotecarios son a largo plazo y utilizan el bien como garantía, en caso de incumplimiento del pago.  
 Bueno, entonces, la fórmula adecuada para calcular los datos del saldo y las cuotas disponibles de los préstamos, las fórmulas son las mismas, sin embargo, lo que cambia entre un préstamo y otro se trata de las tasas de interés y los plazos de pago o cuotas de los préstamos. La fórmula usada para calcular la cuota mensual de un crédito es la siguiente:  
+![imagenformula](Imagenformulaprestamos.jpg)  
+Esa es la fórmula utilizada para calcular las cuotas de cada crédito. Esta solamente es una aproximación y no toma otros factores en cuenta, pero para los usos de nuestro proyecto, servirá de buena manera.  
+Con esto en mente, es apropiado señalar que se van a crear ciertos prestamos predeterminados para que el usuario los analice y piense si son adecuados para su situación particular. Seguidamente se presentarán las propuestas de los prestamos, son 3 propuestas por tipo de préstamo.  
+
+
 
 
 
