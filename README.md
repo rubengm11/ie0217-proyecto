@@ -11,10 +11,42 @@ Bueno, entonces, la fórmula adecuada para calcular los datos del saldo y las cu
 ![imagenformula](Imagenformulaprestamos.jpg)  
 Esa es la fórmula utilizada para calcular las cuotas de cada crédito. Esta solamente es una aproximación y no toma otros factores en cuenta, pero para los usos de nuestro proyecto, servirá de buena manera.  
 Con esto en mente, es apropiado señalar que se van a crear ciertos prestamos predeterminados para que el usuario los analice y piense si son adecuados para su situación particular. Seguidamente se presentarán las propuestas de los prestamos, son 3 propuestas por tipo de préstamo.  
+Préstamo Personal:  
+Primera opción  
+1.	Tasa de interés: 8%  
+2.	Cuotas: 36  
+Segunda opción  
+1.	Tasa de interés: 6.5%  
+2.	Cuotas: 48  
+Tercera opción  
+1.	Tasa de interés: 10%  
+2.	Cuotas: 24  
+Préstamo Hipotecario:  
+Primera opción  
+1.	Tasa de interés: 4,5%  
+2.	Cuotas: 360 (a 30 años)  
+Segunda opción  
+1.	Tasa de interés: 3.8%  
+2.	Cuotas: 300 (a 25 años)  
+Tercera opción  
+1.	Tasa de interés: 4%  
+2.	Cuotas: 336 ( a 28 años)  
+Préstamos prendarios:  
+Primera opción  
+1.	Tasa de interés: 6%  
+2.	Cuotas: 24 (a 2 años)  
+Segunda opción  
+1.	Tasa de interés: 5.2%  
+2.	Cuotas: 36 (a 3 años)  
+Tercera opción  
+1.	Tasa de interés: 4.5%  
+2.	Cuotas: 48 ( a 4 años)  
+Estos son los prestamos presentados, los montos solicitados son variables.  
 
-
-
-
+## Propuesta de agenda para la realización del proyecto.  
+A continuación se presentan la agenda propuesta para completar el proyecto, con fechas, objetivos, encargados y el estado de las tareas.  
+![imagenformula](agendapropuesta.jpg)  
+Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede sufrir de modifcaciones en la marcha.
 
 ## Prototipo del menu
 
