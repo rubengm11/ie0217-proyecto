@@ -49,14 +49,45 @@ A continuación se presentan la agenda propuesta para completar el proyecto, con
 Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede sufrir de modifcaciones en la marcha.
 
 ## Definición de las clases  y métodos.
-Clase: Usuario
-atributos: nombre, identificación, tiene cuenta en dólares, tiene cuenta en colones
-métodos: transferencia, depósito, retiro, CDP
+### Clase: Usuario
+- Atributos
+    - Nombre
+    - Identificación
+    - Cuenta en colones
+    - Cuenta en dólares
+    - Saldos
+    - Préstamos asociados
+- Métodos
+    - Constructor
+    - Depósito
+    - Retiro
+    - Solicitar préstamo
+    - Crear Certificado de Deposito a Plazo.
 
 
-Clase: Préstamo
-atributos: identificación de usuario, monto, tasa de interés
-métodos: crear préstamo, abonar a préstamo existente
+### Clase: Préstamo
+- Atributos
+    - Tipo de préstamo
+    - Tasa de interés
+    - Monto
+    - Periodo mensual
+- Métodos
+    - Constructor
+    - Información de préstamo
+    - Abonar
+    - Generar reporte
+
+
+
+### Clase: CDP
+- Atributos
+    - Tasa de interés 
+    - Monto
+    - Plazo
+- Métodos
+    - Constructor
+    - Eliminar CDP
+
 
 ## Prototipo del menu
 
