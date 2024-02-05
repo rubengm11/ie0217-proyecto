@@ -17,7 +17,7 @@
 ### Tasas de Interés
 - Otra duda frecuente se relaciona con las tasas de interés. La tasa de interés que el cliente puede esperar ganar varía en función del plazo del depósito y del monto depositado. Por lo general, los bancos ofrecen una variedad de plazos y tasas, permitiendo al cliente elegir la opción que mejor se ajuste a sus necesidades de inversión.
 
-## Sección de informiación
+## Sección de información
 - Para empezar, es necesario tener claro los tipos de préstamos que se van a trabajar a lo largo del proyecto, por lo cual se debe de dejar en claro cuales son los mismos y en qué consiste cada uno.  
 
 - Los préstamos personales corresponden a los préstamos que se le adjuntan a un individuo sin la necesidad de especificar el uso de los fondos, generalmente están basados en su capacidad crediticia y su historial de finanzas, estos suelen tener plazos de amortización más cortos. Existen distintas modalidades, desde los simples hasta las líneas de crédito revolventes.  
