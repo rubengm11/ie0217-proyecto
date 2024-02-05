@@ -60,13 +60,13 @@ Tercera opción
 2.	Cuotas: 48 ( a 4 años)  
 Estos son los prestamos presentados, los montos solicitados son variables.  
 
-## Propuesta de agenda para la realización del proyecto.  
+# Propuesta de agenda para la realización del proyecto.  
 A continuación se presentan la agenda propuesta para completar el proyecto, con fechas, objetivos, encargados y el estado de las tareas.  
 ![imagenformula](agendapropuesta.jpg)  
 Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede sufrir de modifcaciones en la marcha.
 
-## Definición de las clases  y métodos.
-### Clase: Usuario
+# Definición de las clases  y métodos.
+## Clase: Usuario
 - Atributos
     - Nombre
     - Identificación
@@ -82,7 +82,7 @@ Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede s
     - Crear Certificado de Deposito a Plazo.
 
 
-### Clase: Préstamo
+## Clase: Préstamo
 - Atributos
     - Tipo de préstamo
     - Tasa de interés
@@ -96,7 +96,7 @@ Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede s
 
 
 
-### Clase: CDP
+## Clase: CDP
 - Atributos
     - Tasa de interés 
     - Monto
@@ -105,15 +105,15 @@ Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede s
     - Constructor
     - Eliminar CDP
 
-### Posible clase adicional
+## Posible clase adicional
 - Se tiene en consideración la creación de una posible clase extra, la cual se llamaria Clase Cuenta, esta funcionaría para almacenar la información de tipo (dólares o colones), saldos e implementar los métodos de depósito, retiro, transacción...
 
 
 
 
-## Prototipo del menu
+# Prototipo del menu
 
-### Seleccione el modo
+## Seleccione el modo
 
 - Atención a clientes
     - Preguntar por el numero de cliente
