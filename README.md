@@ -17,22 +17,5 @@ Una de las principales dudas respecto a los CDP es la posibilidad de acceder al 
 ### Tasas de Interés
 Otra duda frecuente se relaciona con las tasas de interés. La tasa de interés que el cliente puede esperar ganar varía en función del plazo del depósito y del monto depositado. Por lo general, los bancos ofrecen una variedad de plazos y tasas, permitiendo al cliente elegir la opción que mejor se ajuste a sus necesidades de inversión.
 
-## Prototipo del menu
-
-### Seleccione el modo
-
-- Atención a clientes
-    - Preguntar por el numero de cliente
-        - Deposito
-        - Retiro
-        - Transferencia entre cuentas
-        - Reporte sobre prestamos propios
-        - Abono a prestamo
-            - Prestamo propio
-            - Prestamo de otro cliente
-
-- Obtener información general sobre préstamos bancarios
-    - Desplegar informacion predefinida y Generar una tabla de pagos esperados para la opción y monto elegidos por el usuario
-    - Obtener la tabla mediante valores personalizados de monto, cantidad de cuotas y la tasa de interés.
 
 
