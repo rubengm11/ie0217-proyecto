@@ -105,6 +105,9 @@ Sin embargo, esta agenda se encuentra sujeta a cambios, no es la final y puede s
     - Constructor
     - Eliminar CDP
 
+### Posible clase adicional
+- Se tiene en consideracion la posible creacion de una clase adicional llamada Clase Cuenta, la cual tendria como atributos el tipo de cuenta (dolares o colones) y el saldo, y como metodos las posibles interacciones entre usuario-cuenta y cuenta-cuenta.
+
 
 ## Prototipo del menu
 
