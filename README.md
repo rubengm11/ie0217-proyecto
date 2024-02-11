@@ -17,6 +17,8 @@
 ### Tasas de Interés
 - Otra duda frecuente se relaciona con las tasas de interés. La tasa de interés que el cliente puede esperar ganar varía en función del plazo del depósito y del monto depositado. Por lo general, los bancos ofrecen una variedad de plazos y tasas, permitiendo al cliente elegir la opción que mejor se ajuste a sus necesidades de inversión.
 
+<<<<<<< HEAD
+=======
 ## Sección de información
 - Para empezar, es necesario tener claro los tipos de préstamos que se van a trabajar a lo largo del proyecto, por lo cual se debe de dejar en claro cuales son los mismos y en qué consiste cada uno.  
 
@@ -128,10 +130,12 @@
 - Obtener información general sobre préstamos bancarios
     - Desplegar informacion predefinida y Generar una tabla de pagos esperados para la opción y monto elegidos por el usuario
     - Obtener la tabla mediante valores personalizados de monto, cantidad de cuotas y la tasa de interés.
+>>>>>>> origin/main
 
 
 # Bibliografía
 Banco Nacional. (24 de setiembre de 2020). Banco Nacional. Obtenido de Cómo puede obtener mayor rentabilidad por el dinero de la empresa : https://www.bncr.fi.cr/personas/ahorro-e-inversion/certificado-a-plazo  
 bankinter. (5 de octubre de 2022). bankinter. Obtenido de ¿Cuál es la diferencia entre préstamo personal e hipotecario?: https://www.bankinter.com/banca/preguntas-frecuentes/hipotecas/cual-es-la-diferencia-entre-prestamo-personal-prestamo-hipotecario  
 Hogarmanía. (14 de junio de 2018). Hogarmanía. Obtenido de ¿Qué diferencia hay entre un préstamo personal y uno hipotecario?: https://www.hogarmania.com/hogar/economia/diferencias-entre-prestamo-personal-hipotecario-40470.html  
-Rennella, C. (30 de junio de 2023). El mejor trato. Obtenido de Préstamos Prendarios: ¿Convienen más que los Personales?: https://www.elmejortrato.com.ar/creditos/como-sacar-un-prestamo-prendario/que-me-conviene-mas-un-prestamo-personal-o-un-credito-prendario  
+Rennella, C. (30 de junio de 2023). El mejor trato. Obtenido de Préstamos Prendarios: ¿Convienen más que los Personales?: https://www.elmejortrato.com.ar/creditos/como-sacar-un-prestamo-prendario/que-me-conviene-mas-un-prestamo-personal-o-un-credito-prendario
+Bank of America. ( 5 de agosto del 2023). Bank of America. Obtenido de Mejores Hábitos financieros : https://bettermoneyhabits.bankofamerica.com/es/personal-banking/what-is-a-cd-investment
