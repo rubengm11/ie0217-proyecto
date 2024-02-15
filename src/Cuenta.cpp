@@ -2,11 +2,13 @@
 #include <iostream>
 #include <limits>
 
-// Inicialización de la variable estática
+// Definición e inicialización de la variable estática para la tasa de cambio
 double Cuenta::tasaDeCambio = 0.0;
 
+// Constructor: Inicializa una cuenta con un tipo (ejemplo: "Dolares" o "Colones") y saldo inicial
 Cuenta::Cuenta(const std::string& tipo, double saldoInicial) : tipo(tipo), saldo(saldoInicial) {}
 
+// Método para establecer la tasa de cambio; valida que la tasa sea positiva antes de actualizarla
 void Cuenta::establecerTasaDeCambio(double tasa) {
     if (tasa > 0) {
         tasaDeCambio = tasa;
@@ -16,6 +18,7 @@ void Cuenta::establecerTasaDeCambio(double tasa) {
     }
 }
 
+// Método para depositar dinero en la cuenta; valida que el monto a depositar sea positivo
 void Cuenta::depositar(double cantidad) {
     if (cantidad > 0) {
         saldo += cantidad;
@@ -25,6 +28,7 @@ void Cuenta::depositar(double cantidad) {
     }
 }
 
+// Método para retirar dinero de la cuenta; valida que la cantidad a retirar sea positiva y que haya saldo suficiente
 bool Cuenta::retirar(double cantidad) {
     if (cantidad <= 0) {
         std::cout << "Error: La cantidad a retirar debe ser positiva." << std::endl;
@@ -38,6 +42,7 @@ bool Cuenta::retirar(double cantidad) {
     return true;
 }
 
+// Método para realizar una transacción de esta cuenta a otra; realiza el retiro y luego el depósito en la cuenta destino
 bool Cuenta::transaccion(double cantidad, Cuenta &cuentaDestino) {
     if (cantidad <= 0) {
         std::cout << "Error: La cantidad de la transacción debe ser positiva." << std::endl;
@@ -52,14 +57,17 @@ bool Cuenta::transaccion(double cantidad, Cuenta &cuentaDestino) {
     return false;
 }
 
+// Método para consultar el saldo actual de la cuenta
 double Cuenta::consultarSaldo() const {
     return saldo;
 }
 
+// Método para obtener el tipo de moneda de la cuenta
 std::string Cuenta::obtenerTipo() const {
     return tipo;
 }
 
+// Método para convertir el saldo de la cuenta entre dos monedas, utilizando la tasa de cambio establecida
 void Cuenta::convertirSaldo(const std::string& nuevaMoneda) {
     if (tasaDeCambio <= 0) {
         std::cout << "Error: La tasa de cambio no ha sido establecida." << std::endl;
