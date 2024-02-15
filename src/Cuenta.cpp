@@ -2,39 +2,40 @@
 #include <iostream>
 #include <limits>
 
-// Definición e inicialización de la variable estática para la tasa de cambio
+// Inicialización de la variable estática para la tasa de cambio
 double Cuenta::tasaDeCambio = 0.0;
 
-// Constructor: Inicializa una cuenta con un tipo (ejemplo: "Dolares" o "Colones") y saldo inicial
+// Constructor
 Cuenta::Cuenta(const std::string& tipo, double saldoInicial) : tipo(tipo), saldo(saldoInicial) {}
 
-// Método para establecer la tasa de cambio; valida que la tasa sea positiva antes de actualizarla
+// Establecer la tasa de cambio
 void Cuenta::establecerTasaDeCambio(double tasa) {
-    if (tasa > 0) {
-        tasaDeCambio = tasa;
-        std::cout << "Tasa de cambio actualizada a: " << tasa << std::endl;
-    } else {
-        std::cout << "Error: La tasa de cambio debe ser positiva." << std::endl;
+    if (tasa <= 0) {
+        std::cerr << "Error: La tasa de cambio debe ser positiva." << std::endl;
+        return;
     }
+    tasaDeCambio = tasa;
+    std::cout << "Tasa de cambio actualizada a: " << tasa << std::endl;
 }
 
-// Método para depositar dinero en la cuenta; valida que el monto a depositar sea positivo
+// Depositar dinero
 void Cuenta::depositar(double cantidad) {
-    if (cantidad > 0) {
-        saldo += cantidad;
-        std::cout << "Depósito realizado con éxito. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
-    } else {
-        std::cout << "Error: El monto a depositar debe ser positivo." << std::endl;
+    if (cantidad <= 0) {
+        std::cerr << "Error: El monto a depositar debe ser positivo." << std::endl;
+        return;
     }
+    saldo += cantidad;
+    std::cout << "Depósito realizado con éxito. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
 }
 
-// Método para retirar dinero de la cuenta; valida que la cantidad a retirar sea positiva y que haya saldo suficiente
+// Retirar dinero
 bool Cuenta::retirar(double cantidad) {
     if (cantidad <= 0) {
-        std::cout << "Error: La cantidad a retirar debe ser positiva." << std::endl;
+        std::cerr << "Error: La cantidad a retirar debe ser positiva." << std::endl;
         return false;
-    } else if (cantidad > saldo) {
-        std::cout << "Error: Saldo insuficiente para el retiro." << std::endl;
+    }
+    if (cantidad > saldo) {
+        std::cerr << "Error: Saldo insuficiente para el retiro." << std::endl;
         return false;
     }
     saldo -= cantidad;
@@ -42,47 +43,37 @@ bool Cuenta::retirar(double cantidad) {
     return true;
 }
 
-// Método para realizar una transacción de esta cuenta a otra; realiza el retiro y luego el depósito en la cuenta destino
+// Transacción entre cuentas
 bool Cuenta::transaccion(double cantidad, Cuenta &cuentaDestino) {
-    if (cantidad <= 0) {
-        std::cout << "Error: La cantidad de la transacción debe ser positiva." << std::endl;
-        return false;
-    }
-    if (retirar(cantidad)) {
-        cuentaDestino.depositar(cantidad);
-        std::cout << "Transacción realizada con éxito." << std::endl;
-        return true;
-    }
-    std::cout << "Error: Transacción fallida." << std::endl;
-    return false;
+    if (!retirar(cantidad)) return false;
+    cuentaDestino.depositar(cantidad);
+    std::cout << "Transacción realizada con éxito." << std::endl;
+    return true;
 }
 
-// Método para consultar el saldo actual de la cuenta
+// Consultar saldo
 double Cuenta::consultarSaldo() const {
     return saldo;
 }
 
-// Método para obtener el tipo de moneda de la cuenta
+// Obtener tipo de moneda
 std::string Cuenta::obtenerTipo() const {
     return tipo;
 }
 
-// Método para convertir el saldo de la cuenta entre dos monedas, utilizando la tasa de cambio establecida
+// Convertir saldo entre monedas
 void Cuenta::convertirSaldo(const std::string& nuevaMoneda) {
     if (tasaDeCambio <= 0) {
-        std::cout << "Error: La tasa de cambio no ha sido establecida." << std::endl;
+        std::cerr << "Error: La tasa de cambio no ha sido establecida." << std::endl;
         return;
     }
-    if (tipo != nuevaMoneda) {
-        if (nuevaMoneda == "Dolares" && tipo == "Colones") {
-            saldo /= tasaDeCambio; // Convierte de colones a dólares
-            tipo = "Dolares";
-        } else if (nuevaMoneda == "Colones" && tipo == "Dolares") {
-            saldo *= tasaDeCambio; // Convierte de dólares a colones
-            tipo = "Colones";
-        }
-        std::cout << "Conversión realizada. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
-    } else {
+    if (tipo == nuevaMoneda) {
         std::cout << "La cuenta ya está en " << nuevaMoneda << "." << std::endl;
+        return;
     }
+    saldo = (nuevaMoneda == "Dolares" && tipo == "Colones") ? saldo / tasaDeCambio : saldo * tasaDeCambio;
+    tipo = nuevaMoneda;
+    std::cout << "Conversión realizada. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
 }
+
+
