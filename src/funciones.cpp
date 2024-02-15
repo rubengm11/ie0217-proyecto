@@ -2,17 +2,74 @@
 #include "funciones.hpp"
 #include <limits>
 #include "CDP.hpp"
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 using namespace std;
 
-void atenderCliente() {
-    int idCliente;
-    cout << "Ingrese el número de identificación del cliente: ";
-    while (!(cin >> idCliente)) {
-        cout << "Entrada inválida. Por favor, ingrese un número válido: ";
-        cin.clear();  // Limpiar el estado de error
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+struct Cliente {
+    string nombre;
+    string numero_id;
+    bool tiene_cuenta_colones;
+    bool tiene_cuenta_dolares;
+    double saldo_cuenta_colones;
+    double saldo_cuenta_dolares;
+};
+
+bool buscarCliente(const string& numero_id, const string& archivo) {
+    ifstream file(archivo);
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo.\n";
+        return false;
     }
+
+    string linea;
+    while (getline(file, linea)) {
+        istringstream ss(linea);
+        Cliente cliente;
+        char coma; 
+
+        if (ss >> cliente.nombre >> coma >> cliente.numero_id >> coma >>
+                   cliente.tiene_cuenta_colones >> coma >> cliente.tiene_cuenta_dolares >> coma >>
+                   cliente.saldo_cuenta_colones >> coma >> cliente.saldo_cuenta_dolares) {
+            if (cliente.numero_id == numero_id) {
+                cout << "Cliente encontrado:\n";
+                cout << "Nombre: " << cliente.nombre << "\n";
+                cout << "Número de Identificación: " << cliente.numero_id << "\n";
+                cout << "Cuenta en Colones: " << (cliente.tiene_cuenta_colones ? "Sí" : "No") << "\n";
+                cout << "Cuenta en Dólares: " << (cliente.tiene_cuenta_dolares ? "Sí" : "No") << "\n";
+                cout << "Saldo en Colones: " << cliente.saldo_cuenta_colones << "\n";
+                cout << "Saldo en Dólares: " << cliente.saldo_cuenta_dolares << "\n";
+                file.close();
+                return true;
+            }
+        }
+    }
+
+    cout << "Cliente no encontrado.\n";
+    file.close();
+    return false;
+}
+
+
+
+
+void atenderCliente() {
+    string numero_id;
+    cout << "Ingrese el número de identificación (001-010): ";
+    cin >> numero_id;
+
+    if (numero_id.size() == 3 && numero_id >= "001" && numero_id <= "010") {
+        if (!buscarCliente(numero_id, "./src/clientes.csv")) {
+            cout << "El número de identificación no está en el archivo.\n";
+            exit(0);
+        }
+    } else {
+        cout << "Número de identificación no válido.\n";
+        exit(0);
+    }
+
 
     int tipoTransaccion;
     cout << "Seleccione el tipo de transacción:\n"
@@ -30,7 +87,7 @@ void atenderCliente() {
         cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descartar la entrada incorrecta
     }
 
-    cout << "Atendiendo al cliente con ID: " << idCliente << "\n";
+    cout << "Atendiendo al cliente con ID: " << numero_id << "\n";
     cout << "Realizando la transacción número: " << tipoTransaccion << "\n";
 
 
