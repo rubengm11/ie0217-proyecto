@@ -1,6 +1,7 @@
 #include <iostream>
 #include "funciones.hpp"
 #include <limits>
+#include "CDP.hpp"
 
 using namespace std;
 
@@ -31,6 +32,40 @@ void atenderCliente() {
 
     cout << "Atendiendo al cliente con ID: " << idCliente << "\n";
     cout << "Realizando la transacción número: " << tipoTransaccion << "\n";
+
+
+    switch (tipoTransaccion) {
+        case 1:
+            cout << "Realizando Depósito...\n";
+            // Lógica para depósito
+            break;
+        case 2:
+            cout << "Realizando Retiro...\n";
+            // Lógica para retiro
+            break;
+        case 3:
+            cout << "Realizando Transferencia...\n";
+            // Lógica para transferencia
+            break;
+        case 4:
+            cout << "Generando Reporte sobre préstamos propios...\n";
+            // Lógica para reporte de préstamos propios
+            break;
+        case 5:
+            cout << "Accediendo a Certificado de Depósito a Plazo (CDP)...\n";
+            break;
+        case 6:
+            cout << "Realizando Abono a préstamo propio...\n";
+            // Lógica para abono a préstamo propio
+            break;
+        case 7:
+            cout << "Realizando Abono a préstamo de otra persona...\n";
+            // Lógica para abono a préstamo de otra persona
+            break;
+        default:
+            cout << "Opción no válida. Por favor, ingrese un número del 1 al 7.\n";
+    }
+    
 }
 
 void solicitarInformacionPrestamos() {

@@ -16,7 +16,6 @@ public:
     double getMonto() const;
     int getPlazo() const;
 
-    // Otros métodos que puedas necesitar
 };
 
 #endif
