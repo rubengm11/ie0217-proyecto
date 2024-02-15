@@ -1,11 +1,14 @@
 #include <iostream>
 #include "funciones.hpp"
+#include "Prestamo.hpp"
 #include <limits>
 #include "CDP.hpp"
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct Cliente {
@@ -51,8 +54,6 @@ bool buscarCliente(const string& numero_id, const string& archivo) {
     file.close();
     return false;
 }
-
-
 
 
 void atenderCliente() {
@@ -124,7 +125,202 @@ void atenderCliente() {
     }
     
 }
-
+// Se inicia la funcion solicitar, que llama a la clase prestamo y la utiliza.
 void solicitarInformacionPrestamos() {
-    cout << "Imprimir informacion de prestamos";
+    int num_info_prest;
+    do {
+        std::cout << "Digite que tipo de opcion deseada\n";
+        std::cout << "1. Ver la informacion de prestamos hechos por el banco\n";
+        std::cout << "2. Ver la informacion de un prestamo personalizado\n";
+        std::cin >> num_info_prest;
+        if (num_info_prest != 1 && num_info_prest != 2) {
+            std::cout << "Opcion no valida. Por favor, seleccione 1 o 2.\n";
+        }
+    } while (num_info_prest != 1 && num_info_prest != 2);
+ 
+    double tasaInteresAnual;
+    int cantidadCuotas;
+    double montoPrestamo;
+    int tipo;
+    switch (num_info_prest){
+    case 1:
+        int tip_prest;
+        do {
+        std::cout << "Seleccione uno de los tipos de prestamos:\n";
+        std::cout << "0: Personal\n";
+        std::cout << "1: Hipotecario\n";
+        std::cout << "2: Prendario\n";
+        
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> tip_prest) || tip_prest < 0 || tip_prest > 2) {
+            std::cout << "Entrada invalida. Por favor, ingrese un numero entero dentro del rango 0-2.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+        
+    } while (tip_prest < 0 || tip_prest > 2);
+
+       switch (tip_prest)
+        {
+        case 0:
+        int prest_per;
+        do {
+        cout << "Seleccione uno de los prestamos personales:\n";
+        cout << "0: tasa de interes del 10%, 24 cuotas\n";
+        cout << "1: tasa de interes del 8%, 36 cuotas\n";
+        cout << "2: tasa de interes del 6.5%, 48 cuotas\n";
+        
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> prest_per) || prest_per < 0 || prest_per > 2) {
+            std::cout << "Entrada invalida. Por favor, ingrese un numero entero dentro del rango 0-2.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+        } while (prest_per < 0 || prest_per > 2);
+            switch (prest_per) {
+                case 0:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 10;
+                    cantidadCuotas = 24;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 1:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 8;
+                    cantidadCuotas = 36;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 2:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 6.5;
+                    cantidadCuotas = 48;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                default:
+                    cout << "Opcion no valida. Por favor, seleccione una opcion valida.\n";
+            }
+        break;
+        case 1:
+        int prest_hip;
+        do {
+        std::cout << "Seleccione uno de los prestamos hipotecarios:\n";
+        std::cout << "0: tasa de interes del 4.5%, 360 cuotas\n";
+        std::cout << "1: tasa de interes del 3.8%, 300 cuotas\n";
+        std::cout << "2: tasa de interes del 4%, 336 cuotas\n";
+        
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> prest_hip) || prest_hip < 0 || prest_hip > 2) {
+            std::cout << "Entrada invalida. Por favor, ingrese un numero entero dentro del rango 0-2.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+        
+        } while (prest_hip < 0 || prest_hip > 2);
+            switch (prest_hip) {
+                case 0:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 4.5;
+                    cantidadCuotas = 360;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 1:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 3.8;
+                    cantidadCuotas = 300;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 2:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 4;
+                    cantidadCuotas = 336;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                default:
+                    cout << "Opcion no valida. Por favor, seleccione una opcion valida\n";
+            }
+        break;
+        case 2:
+            int prest_pre;
+        do {
+        std::cout << "Seleccione uno de los prestamos prendarios:\n";
+        std::cout << "0: tasa de interes del 6%, 60 cuotas\n";
+        std::cout << "1: tasa de interes del 5.2%, 78 cuotas\n";
+        std::cout << "2: tasa de interes del 4.5%, 90 cuotas\n";
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> prest_pre) || prest_pre < 0 || prest_pre > 2) {
+            std::cout << "Entrada invalida. Por favor, ingrese un numero entero dentro del rango 0-2.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+        } while (prest_pre < 0 || prest_pre > 2);
+            switch (prest_pre) {
+                case 0:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 6;
+                    cantidadCuotas = 60;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 1:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 5.2;
+                    cantidadCuotas = 78;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                case 2:
+                    tipo = Prestamo::PERSONAL;
+                    tasaInteresAnual = 4.5;
+                    cantidadCuotas = 90;
+                    cout << "Ingrese el monto a solicitar:\n";
+                    cin >> montoPrestamo;
+                    break;
+                default:
+                    cout << "Opcion no valida. Por favor, seleccione una opcion valida.\n";
+            }
+        break;
+        default:
+            break;
+        }
+
+    break;
+    case 2:
+    cout << "Introduzca los datos de interes :\n";
+    int tipo;
+    cout << "Tipo de prestamo (0: Personal, 1: Hipotecario, 2: Prendario): ";
+    cin >> tipo;
+    cout << "Ingrese la tasa de interes anual (%): ";
+    cin >> tasaInteresAnual;
+    cout << "Ingrese la cantidad de cuotas (meses): ";
+    cin >> cantidadCuotas;
+    cout << "Ingrese el monto del prestamo: ";
+    cin >> montoPrestamo;
+    break;
+    default:
+            cerr << "Opcion no valida\n";
+            return;
+    }
+    // Se crea el objeto Prestamo con los datos ingresados
+    Prestamo prestamo(Prestamo::PERSONAL, tasaInteresAnual, cantidadCuotas, montoPrestamo);
+
+    // Se imprime el encabezado de la tabla en pantalla
+    std::cout << std::setw(8) << "Mes" << std::setw(15) << "Cuota Mensual" << std::setw(15) << "Intereses" << std::setw(15) << "Deuda" << std::setw(20) << "Mont Restante\n";
+    std::cout << std::string(70, '-') << std::endl;
+
+    // Se calculan e imprimir los valores para cada mes
+    double deuda = montoPrestamo;
+    for (int i = 1; i <= cantidadCuotas; ++i) {
+        double cuotaMensual = prestamo.calcularCuotaMensual();
+        double intereses = deuda * (tasaInteresAnual / 12 / 100);
+        double amortizacion = cuotaMensual - intereses;
+        deuda -= amortizacion;
+    std::cout << std::setw(8) << i << std::fixed << std::setprecision(2) << std::setw(15) << cuotaMensual <<  std::setw(15) << intereses <<  std::setw(15) << amortizacion  << std::setw(20) << deuda << "\n";
+    }
+    cout << "operacion terminada, volviendo al menu principal"<< endl;
 }

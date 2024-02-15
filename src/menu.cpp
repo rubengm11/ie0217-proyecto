@@ -8,11 +8,11 @@ int main() {
     int opcion;
 
     do {
-        cout << "\nMenú Principal:\n"
+        cout << "\nMenu Principal:\n"
              << "1. Atender a un cliente\n"
-             << "2. Solicitar información general sobre préstamos\n"
+             << "2. Solicitar informacion general sobre prestamos\n"
              << "0. Salir\n"
-             << "Seleccione una opción: ";
+             << "Seleccione una opcion: ";
         cin >> opcion;
 
         switch (opcion) {
@@ -26,7 +26,7 @@ int main() {
                 cout << "Saliendo del programa. ¡Hasta luego!\n";
                 break;
             default:
-                cout << "Opción no válida. Intente de nuevo.\n";
+                cout << "Opcion no valida. Intente de nuevo.\n";
                 cin.clear();  // Limpiar el estado de error
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descartar la entrada incorrecta
         }
