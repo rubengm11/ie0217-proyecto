@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -std=c++11
 SRC_DIR = src
 TARGET = programa_bancario
-SRCS = $(SRC_DIR)/menu.cpp $(SRC_DIR)/funciones.cpp
+SRCS = $(SRC_DIR)/menu.cpp $(SRC_DIR)/funciones.cpp $(SRC_DIR)/Prestamo.cpp
 
 ifeq ($(OS),Windows_NT)
 	RM = del /Q

@@ -64,11 +64,11 @@ void atenderCliente() {
     if (numero_id.size() == 3 && numero_id >= "001" && numero_id <= "010") {
         if (!buscarCliente(numero_id, "./src/clientes.csv")) {
             cout << "El número de identificación no está en el archivo.\n";
-            exit(0);
+            //exit(0);
         }
     } else {
         cout << "Número de identificación no válido.\n";
-        exit(0);
+        //exit(0);
     }
 
 
