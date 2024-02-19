@@ -4,7 +4,6 @@
 #include <limits>
 #include "CDP.hpp"
 #include <cmath>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -295,12 +294,45 @@ void solicitarInformacionPrestamos() {
     int tipo;
     cout << "Tipo de prestamo (0: Personal, 1: Hipotecario, 2: Prendario): ";
     cin >> tipo;
-    cout << "Ingrese la tasa de interes anual (%): ";
-    cin >> tasaInteresAnual;
-    cout << "Ingrese la cantidad de cuotas (meses): ";
-    cin >> cantidadCuotas;
-    cout << "Ingrese el monto del prestamo: ";
-    cin >> montoPrestamo;
+    do {
+        cout << "Seleccione uno de los prestamos prendarios:\n";
+        cout << "Tipo de prestamo (0: Personal, 1: Hipotecario, 2: Prendario): ";
+    // Verificar si la entrada es un entero y está dentro del rango correcto
+    while (!(std::cin >> tipo) || tipo < 0 || tipo > 2) {
+            std::cout << "Entrada invalida. Por favor, ingrese un numero entero dentro del rango 0-2.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+    }
+    } while (tipo < 0 || tipo > 2);
+    // Solicitar y validar la tasa de interés anual
+    do {
+        cout << "Ingrese la tasa de interes anual (%): ";
+        if (!(cin >> tasaInteresAnual) || tasaInteresAnual <= 0) {
+            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (tasaInteresAnual <= 0);
+
+    // Solicitar y validar la cantidad de cuotas
+    do {
+        cout << "Ingrese la cantidad de cuotas (meses): ";
+        if (!(cin >> cantidadCuotas) || cantidadCuotas <= 0) {
+            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (cantidadCuotas <= 0);
+
+    // Solicitar y validar el monto del préstamo
+    do {
+        cout << "Ingrese el monto del prestamo: ";
+        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (montoPrestamo <= 0);
     break;
     default:
             cerr << "Opcion no valida\n";
@@ -308,10 +340,14 @@ void solicitarInformacionPrestamos() {
     }
     // Se crea el objeto Prestamo con los datos ingresados
     Prestamo prestamo(Prestamo::PERSONAL, tasaInteresAnual, cantidadCuotas, montoPrestamo);
+    // Se abre el archivo CSV para escritura
+    ofstream archivo("tabla_prestamo_solicitado.csv");
+    if (!archivo.is_open()) {
+        cout << "Error al abrir el archivo." << endl;
+    }
 
-    // Se imprime el encabezado de la tabla en pantalla
-    std::cout << std::setw(8) << "Mes" << std::setw(15) << "Cuota Mensual" << std::setw(15) << "Intereses" << std::setw(15) << "Deuda" << std::setw(20) << "Mont Restante\n";
-    std::cout << std::string(70, '-') << std::endl;
+    // Se escribe el encabezado de la tabla en el archivo CSV
+    archivo << "Mes" << "," << "Cuota Mensual" << "," << "Intereses" << "," << "Deuda" << "," << "Monto Restante" << "\n";
 
     // Se calculan e imprimir los valores para cada mes
     double deuda = montoPrestamo;
@@ -320,7 +356,14 @@ void solicitarInformacionPrestamos() {
         double intereses = deuda * (tasaInteresAnual / 12 / 100);
         double amortizacion = cuotaMensual - intereses;
         deuda -= amortizacion;
-    std::cout << std::setw(8) << i << std::fixed << std::setprecision(2) << std::setw(15) << cuotaMensual <<  std::setw(15) << intereses <<  std::setw(15) << amortizacion  << std::setw(20) << deuda << "\n";
+        
+        // Se escribe la línea en el archivo CSV
+        archivo << i << "," << fixed << setprecision(2) << cuotaMensual << "," << intereses << "," << amortizacion << "," << deuda << "\n";
     }
+
+    // Se cierra el archivo
+    archivo.close();
+
+    cout << "Archivo CSV generado correctamentem se guarda como tabla_prestamo_solicitado.csv ." << endl;
     cout << "operacion terminada, volviendo al menu principal"<< endl;
 }
