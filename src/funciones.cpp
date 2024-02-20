@@ -10,35 +10,11 @@
 #include <iomanip>
 using namespace std;
 
+struct Cliente {
+    string nombre, numero_id, tiene_cuenta_colones, tiene_cuenta_dolares, saldo_cuenta_colones, saldo_cuenta_dolares;
+};
 
-
-
-void atenderCliente() {
-    ifstream archivo("./src/clientes.csv");
-    string linea;
-    char delimitador = ',';
-    getline(archivo, linea);
-
-    string id_cliente;
-    cout << "Ingrese el número de identificación: ";
-    cin >> id_cliente;
-
-    while (getline(archivo,linea)){
-        stringstream stream(linea);
-        string nombre,numero_id,tiene_cuenta_colones,tiene_cuenta_dolares,saldo_cuenta_colones,saldo_cuenta_dolares;
-
-        getline(stream, nombre, delimitador);
-        getline(stream, numero_id, delimitador);
-        getline(stream, tiene_cuenta_colones, delimitador);
-        getline(stream, tiene_cuenta_dolares, delimitador);
-        getline(stream, saldo_cuenta_colones, delimitador);
-        getline(stream, saldo_cuenta_dolares, delimitador);
-
-        
-        if (numero_id == id_cliente){
-            cout << "\n" << "Cliente encontrado, bienvenido (a) " << nombre << endl;
-
-            int tipoTransaccion;
+void mostrarMenu() {
     cout << "Seleccione el tipo de transacción:\n"
          << "1. Depósito\n"
          << "2. Retiro\n"
@@ -47,16 +23,9 @@ void atenderCliente() {
          << "5. CDP\n"
          << "6. Abono a préstamo propio\n"
          << "7. Abono a préstamo de otra persona\n";
+}
 
-    while (!(cin >> tipoTransaccion) || tipoTransaccion < 1 || tipoTransaccion > 7) {
-        cout << "Entrada inválida. Por favor, ingrese un número válido del 1 al 7: ";
-        cin.clear();  // Limpiar el estado de error
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Descartar la entrada incorrecta
-    }
-
-    cout << "Realizando la transacción número: " << tipoTransaccion << "\n";
-
-
+void realizarTransaccion(int tipoTransaccion) {
     switch (tipoTransaccion) {
         case 1:
             cout << "Realizando Depósito...\n";
@@ -87,16 +56,59 @@ void atenderCliente() {
             break;
         default:
             cout << "Opción no válida. Por favor, ingrese un número del 1 al 7.\n";
-    archivo.close();
+    }
 }
+
+void atenderCliente() {
+    ifstream archivo("./src/clientes.csv");
+    string linea;
+    char delimitador = ',';
+    getline(archivo, linea);
+
+    string id_cliente;
+    cout << "Ingrese el número de identificación: ";
+    cin >> id_cliente;
+
+    bool clienteEncontrado = false;
+
+    while (getline(archivo, linea)) {
+        stringstream stream(linea);
+        Cliente cliente;
+
+        getline(stream, cliente.nombre, delimitador);
+        getline(stream, cliente.numero_id, delimitador);
+        getline(stream, cliente.tiene_cuenta_colones, delimitador);
+        getline(stream, cliente.tiene_cuenta_dolares, delimitador);
+        getline(stream, cliente.saldo_cuenta_colones, delimitador);
+        getline(stream, cliente.saldo_cuenta_dolares, delimitador);
+
+        if (cliente.numero_id == id_cliente) {
+            clienteEncontrado = true;
+            cout << "\nCliente encontrado, bienvenido (a) " << cliente.nombre << endl;
+
+            int tipoTransaccion;
+            mostrarMenu();
+
+            while (!(cin >> tipoTransaccion) || tipoTransaccion < 1 || tipoTransaccion > 7) {
+                cout << "Entrada inválida. Por favor, ingrese un número válido del 1 al 7: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Realizando la transacción número: " << tipoTransaccion << "\n";
+            realizarTransaccion(tipoTransaccion);
 
         }
     }
-    cout << "Cliente no encontrado, intente de nuevo" << endl;
-    exit(0);
 
-    archivo.close();   
+    if (!clienteEncontrado) {
+        cout << "Cliente no encontrado, intente de nuevo" << endl;
+        archivo.close();
+        atenderCliente();
+    }
+    archivo.close();
 }
+
 // Se inicia la funcion solicitar, que llama a la clase prestamo y la utiliza.
 void solicitarInformacionPrestamos() {
     int num_info_prest;
