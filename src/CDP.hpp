@@ -1,21 +1,27 @@
 #ifndef CDP_HPP
 #define CDP_HPP
 
-class CDP {
-private:
-    double tasaInteres;
-    double monto;
-    int plazo;
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
+class CDP {
 public:
     // Constructor
-    CDP(double tasa, double monto, int plazo);
+    CDP(double monto, int plazo, double interes, const std::string& id_usuario);
 
-    // Métodos para obtener información
-    double getTasaInteres() const;
-    double getMonto() const;
-    int getPlazo() const;
+    // Métodos
+    void crearCDP();
+    void eliminarCDP();
 
+private:
+    // Atributos
+    double monto;
+    int plazo;
+    double interes;
+    std::string id_usuario;
 };
 
 #endif
+
