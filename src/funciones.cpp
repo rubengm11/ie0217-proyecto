@@ -10,7 +10,7 @@
 #include <iomanip>
 using namespace std;
 
-struct Cliente {
+struct Cliente_struc {
     string nombre, numero_id, tiene_cuenta_colones, tiene_cuenta_dolares, saldo_cuenta_colones, saldo_cuenta_dolares;
 };
 
@@ -25,7 +25,27 @@ void mostrarMenu() {
          << "7. Abono a préstamo de otra persona\n";
 }
 
-void realizarTransaccion(int tipoTransaccion) {
+void crearCDP(string id_cliente){
+    double monto;
+    int plazo;
+    double interes;
+    cout << "Ingrese el monto del CDP: ";
+    cin >> monto;
+    cout << "Ingrese el plazo del CDP en meses: ";
+    cin >> plazo;
+
+    cout << "Ingrese la tasa de interés del CDP (%): ";
+    cin >> interes;
+
+
+    CDP miCDP(monto, plazo, interes, id_cliente);
+    miCDP.crearCDP();
+
+
+}
+
+
+void realizarTransaccion(int tipoTransaccion, string id_cliente) {
     switch (tipoTransaccion) {
         case 1:
             cout << "Realizando Depósito...\n";
@@ -45,6 +65,7 @@ void realizarTransaccion(int tipoTransaccion) {
             break;
         case 5:
             cout << "Accediendo a Certificado de Depósito a Plazo (CDP)...\n";
+            crearCDP(id_cliente);
             break;
         case 6:
             cout << "Realizando Abono a préstamo propio...\n";
@@ -73,7 +94,7 @@ void atenderCliente() {
 
     while (getline(archivo, linea)) {
         stringstream stream(linea);
-        Cliente cliente;
+        Cliente_struc cliente;
 
         getline(stream, cliente.nombre, delimitador);
         getline(stream, cliente.numero_id, delimitador);
@@ -96,7 +117,7 @@ void atenderCliente() {
             }
 
             cout << "Realizando la transacción número: " << tipoTransaccion << "\n";
-            realizarTransaccion(tipoTransaccion);
+            realizarTransaccion(tipoTransaccion, id_cliente);
 
         }
     }
