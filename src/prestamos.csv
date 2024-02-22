@@ -1,1 +1,3 @@
 id_cliente,id_prestamo,monto,tasa_interes,numero_cuotas,cuotas_restantes
+006,100061,50000,10,24,23
+005,000052,20000,8,36,36

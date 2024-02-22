@@ -3,6 +3,5 @@
 
 void atenderCliente();
 void solicitarInformacionPrestamos();
-void crearCDP();
 
 #endif

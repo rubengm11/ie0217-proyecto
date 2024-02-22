@@ -6,7 +6,8 @@
 double Cuenta::tasaDeCambio = 0.0;
 
 // Constructor
-Cuenta::Cuenta(const std::string& tipo, double saldoInicial) : tipo(tipo), saldo(saldoInicial) {}
+// Implementación del constructor
+Cuenta::Cuenta(double saldoInicial, const std::string& tipoMoneda) : saldo(saldoInicial), tipo(tipoMoneda) {}
 
 // Establecer la tasa de cambio
 void Cuenta::establecerTasaDeCambio(double tasa) {
@@ -26,6 +27,7 @@ void Cuenta::depositar(double cantidad) {
     }
     saldo += cantidad;
     std::cout << "Depósito realizado con éxito. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
+    
 }
 
 // Retirar dinero
@@ -49,6 +51,7 @@ bool Cuenta::transaccion(double cantidad, Cuenta &cuentaDestino) {
     cuentaDestino.depositar(cantidad);
     std::cout << "Transacción realizada con éxito." << std::endl;
     return true;
+    
 }
 
 // Consultar saldo
@@ -75,5 +78,6 @@ void Cuenta::convertirSaldo(const std::string& nuevaMoneda) {
     tipo = nuevaMoneda;
     std::cout << "Conversión realizada. Nuevo saldo: " << saldo << " " << tipo << "." << std::endl;
 }
+
 
 

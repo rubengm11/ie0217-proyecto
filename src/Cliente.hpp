@@ -1,31 +1,36 @@
 #ifndef CLIENTE_HPP
 #define CLIENTE_HPP
 
-#include "Cuenta.hpp"
+#include "Cuenta.hpp" // Asegúrate de que la ruta sea correcta según tu estructura de proyecto
 #include <string>
-#include <vector>
 
 class Cliente {
-private:
+public:
     std::string nombre;
     std::string identificacion;
     Cuenta cuentaColones;
     Cuenta cuentaDolares;
-    std::vector<double> prestamos;
 
-public:
     // Constructor
-    Cliente(const std::string& nombre, const std::string& identificacion, const Cuenta& cuentaColones, const Cuenta& cuentaDolares);
+    Cliente(const std::string& nombre, const std::string& identificacion,
+            const Cuenta& cuentaColones, const Cuenta& cuentaDolares);
 
-    // Métodos
+    // Método para mostrar información del cliente
+    void mostrarInformacion() const;
+
+    // Métodos para depositar en cuentas
     void depositarEnCuentaColones(double cantidad);
     void depositarEnCuentaDolares(double cantidad);
+
+    // Métodos para retirar de cuentas
     bool retirarDeCuentaColones(double cantidad);
     bool retirarDeCuentaDolares(double cantidad);
+
+    // Método para solicitar préstamos
     void solicitarPrestamo(double monto);
 
-    // Métodos para mostrar información (opcional)
-    void mostrarInformacion() const;
+    // Método para actualizar el archivo CSV después de cada transacción
+    void actualizarArchivo();
 };
 
-#endif
+#endif // CLIENTE_HPP
