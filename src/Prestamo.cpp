@@ -1,6 +1,7 @@
 #include "Prestamo.hpp"
 #include <cmath>
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <fstream>
 #include <vector>
