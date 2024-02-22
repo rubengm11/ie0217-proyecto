@@ -26,22 +26,74 @@ void mostrarMenu() {
 }
 
 void crearCDP(string id_cliente){
+    bool moneda;
     double monto;
     int plazo;
     double interes;
-    cout << "Ingrese el monto del CDP: ";
-    cin >> monto;
-    cout << "Ingrese el plazo del CDP en meses: ";
-    cin >> plazo;
 
-    cout << "Ingrese la tasa de interés del CDP (%): ";
-    cin >> interes;
+    do {
+        std::cout << "Ingrese la moneda del CDP (0: colones, 1: dolares): ";
+        std::cin >> moneda;
+
+        // Verificar si la entrada es válida
+        if (std::cin.fail() || moneda > 1 || moneda < 0) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  
+            std::cout << "Error: Ingrese una moneda válida." << std::endl;
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
+
+    do {
+        // Pedir al usuario que ingrese el monto y manejar errores
+        std::cout << "Ingrese el monto (debe ser un número positivo): ";
+        std::cin >> monto;
+
+        // Verificar si la entrada es válida
+        if (std::cin.fail() || monto <= 0) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+            std::cout << "Error: Ingrese un monto válido. Debe ser un número positivo." << std::endl;
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
+   
+    do {
+        // Pedir al usuario que ingrese el plazo y manejar errores
+        std::cout << "Ingrese el plazo en meses (debe ser un número entero positivo): ";
+        std::cin >> plazo;
+
+        // Verificar si la entrada es válida
+        if (std::cin.fail() || plazo <= 0) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+            std::cout << "Error: Ingrese un plazo válido. Debe ser un número entero positivo." << std::endl;
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
+
+    do {
+        // Pedir al usuario que ingrese el interés y manejar errores
+        std::cout << "Ingrese la tasa de interés (debe ser un número positivo y menor a 20): ";
+        std::cin >> interes;
+
+        // Verificar si la entrada es válida
+        if (std::cin.fail() || interes <= 0 || interes >= 20) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+            std::cout << "Error: Ingrese un interés válido. Debe ser un número positivo y menor a 20." << std::endl;
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
 
 
-    CDP miCDP(monto, plazo, interes, id_cliente);
+
+    CDP miCDP(monto, plazo, interes, id_cliente, moneda);
     miCDP.crearCDP();
-
-
 }
 
 
