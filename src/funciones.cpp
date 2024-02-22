@@ -164,8 +164,9 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             clienteActual.actualizarArchivo();
             break;
         case 4:
-            cout << "Generando Reporte sobre préstamos propios...\n";
-            // Lógica para reporte de préstamos propios
+            cout << "Generando Reporte sobre préstamos propios en el archivo prestamoscli.csv ...\n";
+            prestamoSolicitado.guardarPrestamosCliente(id_cliente);
+            cout << "Se han guardado los datos en el archivo prestamoscli.csv ...\n";
             break;
         case 5:
             cout << "Accediendo a Certificado de Depósito a Plazo (CDP)...\n";
@@ -195,15 +196,32 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
         }
     } while (prestamorequerido < 0 || prestamorequerido > 8);
 
-        int moneda;
-        cout << "Seleccione la moneda a solicitar del prestamo:\n";
-        cout << "0: solicitar en colones\n";
-        cout << "1: solicitar en dolares\n";
-        cin >> moneda;
+       int moneda;
+    do {
+        std::cout << "Seleccione la moneda a solicitar del préstamo:\n";
+        std::cout << "0: Solicitar en colones\n";
+        std::cout << "1: Solicitar en dólares\n";
+        std::cout << "Ingrese su elección: ";
 
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> moneda) || (moneda != 0 && moneda != 1)) {
+            std::cout << "Entrada inválida. Por favor, seleccione 0 o 1: ";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+
+    } while (moneda != 0 && moneda != 1);
         long monto;
         cout << "Seleccione el monto a solicitar:\n";
         cin >> monto;
+         do {
+        cout << "Ingrese el monto del prestamo: ";
+        if (!(cin >> monto) || monto <= 0) {
+            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        } while (monto <= 0);
 
         switch (prestamorequerido)
         {
@@ -254,7 +272,7 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
         case 7:
             // Funcion para abonar un prestamo propio
             prestamoSolicitado.abonarPrestamoPropio(id_cliente);
-            cout << "Realizando Abono a préstamo de otra propio...\n";
+            cout << "Realizando Abono a préstamo propio...\n";
         break;
         case 8:
             // Lógica para abono a préstamo de otra persona
@@ -313,8 +331,8 @@ void atenderCliente() {
             mostrarMenu();
 
 
-            while (!(cin >> tipoTransaccion) || tipoTransaccion < 1 || tipoTransaccion > 7) {
-                cout << "Entrada inválida. Por favor, ingrese un número válido del 1 al 7: ";
+            while (!(cin >> tipoTransaccion) || tipoTransaccion < 1 || tipoTransaccion > 8) {
+                cout << "Entrada inválida. Por favor, ingrese un número válido del 1 al 8: ";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
