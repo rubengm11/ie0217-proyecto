@@ -27,6 +27,9 @@ public:
     // Metodo para guardar información del préstamo en el archivo de texto prestamos.csv
     void guardarPrestamo(int moneda, std::string idCliente);
 
+    // Metodo para seleccionar prestamos
+    void guardarPrestamosCliente(std::string idCliente);
+
     // Metodo para abonar a un préstamo propio
     void abonarPrestamoPropio(std::string idCliente);
 

@@ -23,6 +23,7 @@ double Prestamo::calcularCuotaMensual()
 // Metodo para guardar información del préstamo en el archivo de texto prestamos.csv
 void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 {
+    
     // Leemos el archivo para contar el número de líneas
     std::ifstream archivoLectura("./src/prestamos.csv");
 
@@ -54,6 +55,62 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
     // Cierra el archivo
     archivo.close();
 }
+    // Metodo para seleccionar prestamos
+    void Prestamo::guardarPrestamosCliente(std::string idCliente)
+{
+    // Abrir el archivo prestamos.csv en modo lectura
+    std::ifstream archivoLectura("./src/prestamos.csv");
+
+    // Verificar si el archivo se abrió correctamente
+    if (!archivoLectura.is_open())
+    {
+        std::cerr << "Error al abrir el archivo prestamos.csv" << std::endl;
+        return;
+    }
+
+    // Crear y abrir el archivo prestamoscli.csv en modo escritura
+    std::ofstream archivo("./src/prestamoscli.csv");
+
+    // Verificar si el archivo se abrió correctamente
+    if (!archivo.is_open())
+    {
+        std::cerr << "Error al abrir el archivo prestamoscli.csv" << std::endl;
+        return;
+    }
+
+    // Escribir el encabezado del archivo CSV
+    archivo << "id_cliente,id_prestamo,monto,tasa_interes,numero_cuotas,cuotas_restantes" << std::endl;
+
+    // Leer el archivo para encontrar los préstamos del cliente
+    std::string linea;
+    while (std::getline(archivoLectura, linea))
+    {
+        std::istringstream iss(linea);
+        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotasRestantes;
+
+        // Leer los valores de cada columna
+        std::getline(iss, idClienteFromFile, ',');
+        std::getline(iss, idPrestamo, ',');
+        std::getline(iss, monto, ',');
+        std::getline(iss, tasaInteres, ',');
+        std::getline(iss, numCuotas, ',');
+        std::getline(iss, cuotasRestantes, ',');
+
+        // Si el préstamo pertenece al cliente actual, escribirlo en el archivo prestamoscli.csv
+        if (idCliente == idClienteFromFile)
+        {
+            archivo << idClienteFromFile << ',' << idPrestamo << ',' << monto << ',' << tasaInteres << ',' << numCuotas << ',' << cuotasRestantes << std::endl;
+        }
+    }
+
+    // Cerrar los archivos
+    archivoLectura.close();
+    archivo.close();
+
+    std::cout << "Los préstamos del cliente " << idCliente << " se han guardado en el archivo prestamoscli.csv" << std::endl;
+}
+
+
 
 // Metodo para abonar a un préstamo propio
 void Prestamo::abonarPrestamoPropio(std::string idCliente)
