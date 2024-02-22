@@ -9,11 +9,10 @@
 class CDP {
 public:
     // Constructor
-    CDP(double monto, int plazo, double interes, const std::string& id_usuario);
+    CDP(double monto, int plazo, double interes, const std::string& id_usuario, bool moneda);
 
     // Métodos
     void crearCDP();
-    void eliminarCDP();
 
 private:
     // Atributos
@@ -21,6 +20,7 @@ private:
     int plazo;
     double interes;
     std::string id_usuario;
+    bool moneda;
 };
 
 #endif
