@@ -1,24 +1,17 @@
 #include <iostream>
+#include <limits>
+#include <cmath>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <iomanip>
 #include "funciones.hpp"
 #include "Cliente.hpp"
 #include "Cuenta.hpp"
 #include "Prestamo.hpp"
-#include <limits>
 #include "CDP.hpp"
-#include <cmath>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <iomanip>
-#include <iostream>
-#include "Prestamo.hpp"
-#include <limits>
-#include "CDP.hpp"
-#include <cmath>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <iomanip>
+#include <vector>
+
 using namespace std;
 
 
@@ -46,14 +39,14 @@ void crearCDP(string id_cliente){
     double interes;
 
     do {
-        std::cout << "Ingrese la moneda del CDP (0: colones, 1: dolares): ";
-        std::cin >> moneda;
+        cout << "Ingrese la moneda del CDP (0: colones, 1: dolares): ";
+        cin >> moneda;
 
         // Verificar si la entrada es válida
-        if (std::cin.fail() || moneda > 1 || moneda < 0) {
-            std::cin.clear();  // Limpiar el estado de error
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  
-            std::cout << "Error: Ingrese una moneda válida." << std::endl;
+        if (cin.fail() || moneda > 1 || moneda < 0) {
+            cin.clear();  // Limpiar el estado de error
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+            cout << "Error: Ingrese una moneda válida." << std::endl;
         } else {
             break;  // Salir del bucle si la entrada es válida
         }
@@ -158,11 +151,98 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             }
             break;
         }
-        case 3:
+        case 3: {
             cout << "Realizando Transferencia...\n";
-            // Lógica para transferencia
-            clienteActual.actualizarArchivo();
-            break;
+    double montoTransferir;
+    string idClienteDestino;
+    int tipoMoneda;
+    bool esRetiroExitoso = false, clienteEncontrado = false, tieneCuentaEnMoneda = false;
+
+    // Solicitar información de la transferencia
+    cout << "Ingrese el monto a transferir: ";
+    cin >> montoTransferir;
+    cout << "Ingrese el tipo de moneda (1 para Colones, 2 para Dólares): ";
+    cin >> tipoMoneda;
+    cout << "Ingrese el ID del cliente destino: ";
+    cin >> idClienteDestino;
+
+    // Verificar que el monto es positivo y el tipo de moneda es válido
+    if (montoTransferir <= 0 || (tipoMoneda != 1 && tipoMoneda != 2)) {
+        cout << "Operación inválida.\n";
+        break;
+    }
+
+    vector<string> lineasActualizadas;
+    string linea;
+    fstream archivoClientes("./src/clientes.csv", ios::in);
+    if (!archivoClientes.is_open()) {
+        cout << "Error al abrir el archivo.\n";
+        break;
+    }
+
+    // Leer todo el archivo y buscar al cliente destino al mismo tiempo
+    while (getline(archivoClientes, linea)) {
+    stringstream ss(linea);
+    string segmento;
+    vector<string> segmentos;
+    while (getline(ss, segmento, ',')) {
+        segmentos.push_back(segmento);
+    }
+
+    if (segmentos[1] == idClienteDestino && ((tipoMoneda == 1 && segmentos[2] == "1") || (tipoMoneda == 2 && segmentos[3] == "1"))) {
+        clienteEncontrado = true;
+        tieneCuentaEnMoneda = true;
+        // Actualizar el saldo del cliente destino
+        double saldoActual = stod(segmentos[tipoMoneda + 3]);
+        saldoActual += montoTransferir; // Asumiendo que segmentos[4] o segmentos[5] contiene el saldo
+        int saldoSinDecimales = static_cast<int>(round(saldoActual)); // Redondea y convierte a entero
+        segmentos[tipoMoneda + 3] = to_string(saldoSinDecimales);
+    }
+
+    // Reconstruir la línea y agregarla a lineasActualizadas
+    string lineaActualizada;
+    for (size_t i = 0; i < segmentos.size(); i++) {
+        lineaActualizada += segmentos[i];
+        if (i < segmentos.size() - 1) lineaActualizada += ",";
+    }
+    lineasActualizadas.push_back(lineaActualizada);
+}
+
+
+
+    archivoClientes.close();
+
+    // Verificar si el cliente destino fue encontrado y tiene cuenta en la moneda especificada
+    if (!clienteEncontrado || !tieneCuentaEnMoneda) {
+        cout << "Cliente destino no encontrado o no tiene cuenta en la moneda especificada.\n";
+        break;
+    }
+
+    // Intentar retirar fondos solo después de verificar que el cliente destino es válido
+    esRetiroExitoso = (tipoMoneda == 1) ? clienteActual.retirarDeCuentaColones(montoTransferir) 
+                                        : clienteActual.retirarDeCuentaDolares(montoTransferir);
+    if (!esRetiroExitoso) {
+        cout << "Fondos insuficientes para realizar la transferencia.\n";
+        break;
+    }
+
+    // Abrir el archivo nuevamente, esta vez para escribir
+    archivoClientes.open("./src/clientes.csv", ios::out | ios::trunc);
+    if (!archivoClientes.is_open()) {
+        cout << "Error al abrir el archivo para actualización.\n";
+        break;
+    }
+
+    // Escribir todas las líneas actualizadas de vuelta al archivo
+    for (const auto& lineaActualizada : lineasActualizadas) {
+        archivoClientes << lineaActualizada << "\n";
+    }
+    archivoClientes.close();
+
+    cout << "Transferencia realizada con éxito.\n";
+    break;
+        }
+            
         case 4:
             cout << "Generando Reporte sobre préstamos propios en el archivo prestamoscli.csv ...\n";
             prestamoSolicitado.guardarPrestamosCliente(id_cliente);
