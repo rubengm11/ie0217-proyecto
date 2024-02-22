@@ -23,7 +23,7 @@ double Prestamo::calcularCuotaMensual()
 void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 {
     // Leemos el archivo para contar el número de líneas
-    std::ifstream archivoLectura("prestamos.csv");
+    std::ifstream archivoLectura("./src/prestamos.csv");
 
     int numeroLineas = 0;
     std::string linea;
@@ -37,7 +37,7 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
     // Cierra el archivo de lectura
     archivoLectura.close();
 
-    std::ofstream archivo("prestamos.csv", std::ios::app);
+    std::ofstream archivo("./src/prestamos.csv", std::ios::app);
 
     // Verifica si el archivo se abrió correctamente
     if (!archivo.is_open())
@@ -58,7 +58,7 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 void Prestamo::abonarPrestamoPropio(std::string idCliente)
 {
     // Abrir el archivo prestamos.csv en modo lectura y escritura
-    std::fstream file("prestamos.csv", std::ios::in | std::ios::out);
+    std::fstream file("./src/prestamos.csv", std::ios::in | std::ios::out);
 
     // Revision de apertura del archivo
     if (!file.is_open())
@@ -75,7 +75,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     std::cout << "Prestamos disponibles para el cliente " << idCliente << ":" << std::endl;
 
     // Leer el archivo para contar el número de líneas
-    std::ifstream archivoLectura("prestamos.csv");
+    std::ifstream archivoLectura("./src/prestamos.csv");
 
     // Cierra el archivo de lectura
     archivoLectura.close();
@@ -106,7 +106,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     file.close();
 
     // Abrir el archivo nuevamente en modo lectura y escritura
-    file.open("prestamos.csv", std::ios::in | std::ios::out);
+    file.open("./src/prestamos.csv", std::ios::in | std::ios::out);
 
     // Pedir al usuario que elija a cuál préstamo abonar (propio
     std::cout << "Ingrese el ID del prestamo al que desea abonar: ";
@@ -148,7 +148,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     file.close();
 
     // Verificar si el archivo ha cambiado
-    std::ifstream originalFile("prestamos.csv");
+    std::ifstream originalFile("./src/prestamos.csv");
     std::string originalContent((std::istreambuf_iterator<char>(originalFile)), std::istreambuf_iterator<char>());
     originalFile.close();
 
@@ -164,7 +164,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     if (originalContent != modifiedContent.str())
     {
         // Abrir el archivo en modo de escritura
-        std::ofstream outFile("prestamos.csv");
+        std::ofstream outFile("./src/prestamos.csv");
 
         // Escribir todas las líneas en el archivo
         for (const auto &l : lines)
@@ -188,7 +188,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
 void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string idPrestamoAbonar)
 {
     // Abrir el archivo prestamos.csv en modo lectura y escritura
-    std::fstream file("prestamos.csv", std::ios::in | std::ios::out);
+    std::fstream file("./src/prestamos.csv", std::ios::in | std::ios::out);
 
     if (!file.is_open())
     {
@@ -239,7 +239,7 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
     file.close();
 
     // Verificar si el archivo ha cambiado
-    std::ifstream originalFile("prestamos.csv");
+    std::ifstream originalFile("./src/prestamos.csv");
     std::string originalContent((std::istreambuf_iterator<char>(originalFile)), std::istreambuf_iterator<char>());
     originalFile.close();
 
@@ -255,7 +255,7 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
     if (originalContent != modifiedContent.str())
     {
         // Abrir el archivo en modo de escritura
-        std::ofstream outFile("prestamos.csv");
+        std::ofstream outFile("./src/prestamos.csv");
 
         // Escribir todas las líneas en el archivo
         for (const auto &l : lines)

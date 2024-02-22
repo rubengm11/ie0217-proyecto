@@ -72,21 +72,28 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente) {
             crearCDP(id_cliente);
             break;
         case 6:
-        cout << "Seleccione uno de los prestamos a solicitar:\n";
-        cout << "Prestamos Personales:\n";
-        cout << "0: Personal tasa de interes del 10%, 24 cuotas\n";
-        cout << "1: Personal tasa de interes del 8%, 36 cuotas\n";
-        cout << "2: Personal tasa de interes del 6.5%, 48 cuotas\n";
-        cout << "Prestamos Hipotecarios:\n";
-        cout << "3: Hipotecario tasa de interes del 4.5%, 360 cuotas\n";
-        cout << "4: Hipotecario tasa de interes del 3.8%, 300 cuotas\n";
-        cout << "5: Hipotecario tasa de interes del 4%, 336 cuotas\n";
-        cout << "Prestamos Prendarios:\n";
-        cout << "6: Prendario tasa de interes del 6%, 60 cuotas\n";
-        cout << "7: Prendario tasa de interes del 5.2%, 78 cuotas\n";
-        cout << "8: Prendario tasa de interes del 4.5%, 90 cuotas\n";
         int prestamorequerido;
-        cin >> prestamorequerido;
+        do {
+        std::cout << "Seleccione uno de los prestamos a solicitar:\n";
+        std::cout << "Prestamos Personales:\n";
+        std::cout << "0: Personal tasa de interes del 10%, 24 cuotas\n";
+        std::cout << "1: Personal tasa de interes del 8%, 36 cuotas\n";
+        std::cout << "2: Personal tasa de interes del 6.5%, 48 cuotas\n";
+        std::cout << "Prestamos Hipotecarios:\n";
+        std::cout << "3: Hipotecario tasa de interes del 4.5%, 360 cuotas\n";
+        std::cout << "4: Hipotecario tasa de interes del 3.8%, 300 cuotas\n";
+        std::cout << "5: Hipotecario tasa de interes del 4%, 336 cuotas\n";
+        std::cout << "Prestamos Prendarios:\n";
+        std::cout << "6: Prendario tasa de interes del 6%, 60 cuotas\n";
+        std::cout << "7: Prendario tasa de interes del 5.2%, 78 cuotas\n";
+        std::cout << "8: Prendario tasa de interes del 4.5%, 90 cuotas\n";
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> prestamorequerido) || prestamorequerido < 0 || prestamorequerido > 8) {
+            std::cout << "Entrada inválida. Por favor, ingrese un número entero dentro del rango 0-8.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+    } while (prestamorequerido < 0 || prestamorequerido > 8);
 
         int moneda;
         cout << "Seleccione la moneda a solicitar del prestamo:\n";
@@ -141,12 +148,12 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente) {
             return; // Salir del programa con un código de error
         }
 
-        prestamoSolicitado.guardarPrestamo(moneda, numero_id);
+        prestamoSolicitado.guardarPrestamo(moneda, id_cliente);
         cout << "\nRealizando Solicitud de prestamo propio...\n";
         break;
         case 7:
             // Funcion para abonar un prestamo propio
-            prestamoSolicitado.abonarPrestamoPropio(numero_id);
+            prestamoSolicitado.abonarPrestamoPropio(id_cliente);
             cout << "Realizando Abono a préstamo de otra propio...\n";
         break;
         case 8:
@@ -154,7 +161,7 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente) {
             cout << "Digite el Id del Prestamo a Abonar:\n";
             cin >> idPrestamoAbonar;
 
-            prestamoSolicitado.abonarPrestamoAgeno(numero_id, idPrestamoAbonar);
+            prestamoSolicitado.abonarPrestamoAgeno(id_cliente, idPrestamoAbonar);
             cout << "Realizando Abono a préstamo de otra persona...\n";
             break;
         default:
