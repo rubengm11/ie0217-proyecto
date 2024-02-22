@@ -32,6 +32,78 @@ void mostrarMenu() {
 
 }
 
+void agregarCliente(){
+    cout << "Agregando un nuevo cliente" << endl;
+    string nombre, numeroID;
+    int tieneCuentaColones, tieneCuentaDolares;
+    double saldoCuentaColones, saldoCuentaDolares;
+
+    // Solicitar al usuario los datos del nuevo cliente
+    std::cout << "Ingrese el nombre del cliente: ";
+    std::getline(std::cin >> std::ws, nombre);
+
+    do {
+        std::cout << "Ingrese el número de identificación (9 dígitos): ";
+        std::getline(std::cin >> std::ws, numeroID);
+
+        if (numeroID.length() != 9) {
+            std::cout << "Número de identificación inválido. Debe tener 9 dígitos numéricos.\n";
+        } else {
+            break;
+        }
+    } while (true);
+
+    std::cout << "¿Tiene cuenta en colones? (1 para sí, 0 para no): ";
+    std::cin >> tieneCuentaColones;
+
+    std::cout << "¿Tiene cuenta en dólares? (1 para sí, 0 para no): ";
+    std::cin >> tieneCuentaDolares;
+
+    while (true){
+        if (!tieneCuentaColones & !tieneCuentaDolares){
+            cout << "El cliente debe tener al menos una cuenta.\n";
+            break;
+
+        } else {
+            if (tieneCuentaColones) {
+            std::cout << "Ingrese el saldo en colones: ";
+            std::cin >> saldoCuentaColones;
+        } else {
+            saldoCuentaColones = 0;
+        }
+
+        if (tieneCuentaDolares) {
+            std::cout << "Ingrese el saldo en dólares: ";
+            std::cin >> saldoCuentaDolares;
+        } else {
+            saldoCuentaDolares = 0;
+        }
+
+        // Abrir el archivo en modo apendizaje para agregar el nuevo cliente
+        std::ofstream archivo("./src/clientes.csv", std::ios::app);
+
+        if (!archivo.is_open()) {
+            std::cerr << "Error al abrir el archivo.\n";
+            return;
+        }
+
+        // Escribir los datos del nuevo cliente en el archivo
+        archivo << nombre << "," << numeroID << ","
+                << tieneCuentaColones << "," << tieneCuentaDolares << ","
+                << saldoCuentaColones << "," << saldoCuentaDolares << "\n";
+
+        archivo.close();
+
+        std::cout << "Cliente agregado exitosamente.\n";
+        break;
+
+        }
+    }
+
+
+    
+}
+
 void crearCDP(string id_cliente){
     bool moneda;
     double monto;

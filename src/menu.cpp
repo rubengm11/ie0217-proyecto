@@ -11,6 +11,7 @@ int main() {
         cout << "\nMenu Principal:\n"
              << "1. Atender a un cliente\n"
              << "2. Solicitar informacion general sobre prestamos\n"
+             << "3. Agregar nuevo cliente\n"
              << "0. Salir\n"
              << "Seleccione una opcion: ";
         cin >> opcion;
@@ -21,6 +22,9 @@ int main() {
                 break;
             case 2:
                 solicitarInformacionPrestamos();
+                break;
+            case 3:
+                agregarCliente();
                 break;
             case 0:
                 cout << "Saliendo del programa. ¡Hasta luego!\n";
