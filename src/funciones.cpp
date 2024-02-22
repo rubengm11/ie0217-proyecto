@@ -21,8 +21,10 @@ void mostrarMenu() {
          << "3. Transferencia\n"
          << "4. Reporte sobre préstamos propios\n"
          << "5. CDP\n"
-         << "6. Abono a préstamo propio\n"
-         << "7. Abono a préstamo de otra persona\n";
+         << "6. Solicitar un prestamo\n"
+         << "7. Abono a préstamo propio\n"
+         << "8. Abono a préstamo de otra persona\n";
+
 }
 
 void crearCDP(string id_cliente){
@@ -44,6 +46,8 @@ void crearCDP(string id_cliente){
 
 }
 
+    Prestamo prestamoSolicitado;
+    string idPrestamoAbonar;
 
 void realizarTransaccion(int tipoTransaccion, string id_cliente) {
     switch (tipoTransaccion) {
@@ -68,15 +72,100 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente) {
             crearCDP(id_cliente);
             break;
         case 6:
-            cout << "Realizando Abono a préstamo propio...\n";
-            // Lógica para abono a préstamo propio
+        int prestamorequerido;
+        do {
+        std::cout << "Seleccione uno de los prestamos a solicitar:\n";
+        std::cout << "Prestamos Personales:\n";
+        std::cout << "0: Personal tasa de interes del 10%, 24 cuotas\n";
+        std::cout << "1: Personal tasa de interes del 8%, 36 cuotas\n";
+        std::cout << "2: Personal tasa de interes del 6.5%, 48 cuotas\n";
+        std::cout << "Prestamos Hipotecarios:\n";
+        std::cout << "3: Hipotecario tasa de interes del 4.5%, 360 cuotas\n";
+        std::cout << "4: Hipotecario tasa de interes del 3.8%, 300 cuotas\n";
+        std::cout << "5: Hipotecario tasa de interes del 4%, 336 cuotas\n";
+        std::cout << "Prestamos Prendarios:\n";
+        std::cout << "6: Prendario tasa de interes del 6%, 60 cuotas\n";
+        std::cout << "7: Prendario tasa de interes del 5.2%, 78 cuotas\n";
+        std::cout << "8: Prendario tasa de interes del 4.5%, 90 cuotas\n";
+        // Verificar si la entrada es un entero y está dentro del rango correcto
+        while (!(std::cin >> prestamorequerido) || prestamorequerido < 0 || prestamorequerido > 8) {
+            std::cout << "Entrada inválida. Por favor, ingrese un número entero dentro del rango 0-8.\n";
+            std::cin.clear(); // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descartar la entrada incorrecta
+        }
+    } while (prestamorequerido < 0 || prestamorequerido > 8);
+
+        int moneda;
+        cout << "Seleccione la moneda a solicitar del prestamo:\n";
+        cout << "0: solicitar en colones\n";
+        cout << "1: solicitar en dolares\n";
+        cin >> moneda;
+
+        long monto;
+        cout << "Seleccione el monto a solicitar:\n";
+        cin >> monto;
+
+        switch (prestamorequerido)
+        {
+        case 0: // Personal tasa de interés del 10%, 24 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PERSONAL, 10.0, 24, monto);
             break;
+
+        case 1: // Personal tasa de interés del 8%, 36 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PERSONAL, 8.0, 36, monto);
+            break;
+
+        case 2: // Personal tasa de interés del 6.5%, 48 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PERSONAL, 6.5, 48, monto);
+            break;
+
+        case 3: // Hipotecario tasa de interés del 4.5%, 360 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::HIPOTECARIO, 4.5, 360, monto);
+            break;
+
+        case 4: // Hipotecario tasa de interés del 3.8%, 300 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::HIPOTECARIO, 3.8, 300, monto);
+            break;
+
+        case 5: // Hipotecario tasa de interés del 4%, 336 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::HIPOTECARIO, 4.0, 336, monto);
+            break;
+
+        case 6: // Prendario tasa de interés del 6%, 60 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PRENDARIO, 6.0, 60, monto);
+            break;
+
+        case 7: // Prendario tasa de interés del 5.2%, 78 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PRENDARIO, 5.2, 78, monto);
+            break;
+
+        case 8: // Prendario tasa de interés del 4.5%, 90 cuotas
+            prestamoSolicitado = Prestamo(Prestamo::PRENDARIO, 4.5, 90, monto);
+            break;
+
+        default:
+            cout << "Opción no válida\n";
+            return; // Salir del programa con un código de error
+        }
+
+        prestamoSolicitado.guardarPrestamo(moneda, id_cliente);
+        cout << "\nRealizando Solicitud de prestamo propio...\n";
+        break;
         case 7:
-            cout << "Realizando Abono a préstamo de otra persona...\n";
+            // Funcion para abonar un prestamo propio
+            prestamoSolicitado.abonarPrestamoPropio(id_cliente);
+            cout << "Realizando Abono a préstamo de otra propio...\n";
+        break;
+        case 8:
             // Lógica para abono a préstamo de otra persona
+            cout << "Digite el Id del Prestamo a Abonar:\n";
+            cin >> idPrestamoAbonar;
+
+            prestamoSolicitado.abonarPrestamoAgeno(id_cliente, idPrestamoAbonar);
+            cout << "Realizando Abono a préstamo de otra persona...\n";
             break;
         default:
-            cout << "Opción no válida. Por favor, ingrese un número del 1 al 7.\n";
+            cout << "Opción no válida. Por favor, ingrese un número del 1 al 8.\n";
     }
 }
 
