@@ -1,3 +1,7 @@
+/**
+ * @file Prestamo.hpp
+ * @brief Definición de la clase Prestamo y sus métodos relacionados.
+ */
 #include "Prestamo.hpp"
 #include <cmath>
 #include <iostream>
@@ -8,22 +12,38 @@
 #include <vector>
 #include <limits>
 
+/**
+ * @brief Clase que representa un préstamo. Es el contructor por default
+ */
 
-// Contructor por default
 Prestamo::Prestamo() {}
 
-// Constructor por copia de la clase reciviendo parametros
+    /**
+     * @brief Constructor por copia de la clase Prestamo, recibiendo los debidos parametros.
+     * @param tipo Tipo de préstamo.
+     * @param tasaInteresAnual Tasa de interés anual del préstamo.
+     * @param cantidadCuotas Cantidad de cuotas del préstamo.
+     * @param montoPrestamo Monto total del préstamo.
+     */
 Prestamo::Prestamo(Tipo tipo, double tasaInteresAnual, int cantidadCuotas, long montoPrestamo)
     : tipoPrestamo(tipo), tasaInteresAnual(tasaInteresAnual), cantidadCuotas(cantidadCuotas), montoPrestamo(montoPrestamo) {}
 
+    /**
+     * @brief Se calcula la cuota mensual del préstamo mediante la fórmula en cuestión.
+     * @return La cuota mensual del préstamo.
+     */
 double Prestamo::calcularCuotaMensual()
 {
     double tasaInteresMensual = tasaInteresAnual / 12 / 100;
     double cuotaMensual = (montoPrestamo * tasaInteresMensual) / (1 - pow(1 + tasaInteresMensual, -cantidadCuotas));
     return cuotaMensual;
 }
+    /**
+     * @brief Se guarda información del préstamo en el archivo de texto prestamos.csv
+     * @param moneda Tipo de moneda.
+     * @param idCliente Identificación del cliente.
+     */
 
-// Metodo para guardar información del préstamo en el archivo de texto prestamos.csv
 void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 {
     // Leemos el archivo para contar el número de líneas
@@ -83,8 +103,11 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
         archivoRegistro.close();
 }
 
+    /**
+     * @brief Se guardan los préstamos de el cliente en cuestion en un archivo CSV, llamado prestamoscli.csv.
+     * @param idCliente Identificación del cliente.
+     */
 
-// Metodo para seleccionar prestamos
     void Prestamo::guardarPrestamosCliente(std::string idCliente)
 {
     // Abrir el archivo prestamos.csv en modo lectura
@@ -140,7 +163,11 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
     std::cout << "Los préstamos del cliente " << idCliente << " se han guardado en el archivo prestamoscli.csv" << std::endl;
 }
 
-// Metodo para abonar a un préstamo propio
+    /**
+     * @brief Permite al cliente abonar a uno de sus préstamos. Hace los cambios prudentes en los archivos
+     * requeridos
+     * @param idCliente Identificación del cliente.
+     */
 void Prestamo::abonarPrestamoPropio(std::string idCliente)
 {
     // Abrir el archivo prestamos.csv en modo lectura y escritura
@@ -306,7 +333,12 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
    
 }
 
-// Metodo para abonar a un préstamo ageno
+    /**
+     * @brief Permite a un cliente abonar a un préstamo de otro cliente. Modificando los archivos prudentes.
+     * @param idClienteAbonador Identificación del cliente que realiza el abono.
+     * @param idPrestamoAbonar Identificación del préstamo al que se realiza el abono.
+     */
+
 void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string idPrestamoAbonar)
 {
     // Abrir el archivo prestamos.csv en modo lectura y escritura
