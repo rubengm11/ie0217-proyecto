@@ -28,8 +28,7 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 
     int numeroPrestamos = 1;
     std::string linea;
-    
-    
+
     // Lee el archivo línea por línea y cuenta los préstamos del cliente
     while (std::getline(archivoLectura, linea))
     {
@@ -40,7 +39,7 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
         // Leer el primer campo que contiene el id_cliente, solo nos interesa
         std::getline(ss, campo, ',');
 
-        // Si el id_cliente coincide con el proporcionado, sumamos 1 al de prestamos contador
+        // Si el id_cliente coincide con el proporcionado, sumamos 1 al contador de préstamos
         if (campo == idCliente)
         {
             numeroPrestamos++;
@@ -59,13 +58,17 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
         return;
     }
 
+    // Calcular la cuota mensual
+    double cuotaMensual = calcularCuotaMensual();
+
     // Escribe la nueva línea en el archivo
     archivo << idCliente << ',' << moneda << tipoPrestamo << idCliente << numeroPrestamos << ',' << montoPrestamo
-            << ',' << tasaInteresAnual << ',' << cantidadCuotas << ',' << cantidadCuotas << std::endl;
+            << ',' << tasaInteresAnual << ',' << cantidadCuotas << ',' << cuotaMensual << ',' << cantidadCuotas << std::endl;
 
     // Cierra el archivo
     archivo.close();
 }
+
 
 // Metodo para seleccionar prestamos
     void Prestamo::guardarPrestamosCliente(std::string idCliente)
@@ -91,27 +94,28 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
     }
 
     // Escribir el encabezado del archivo CSV
-    archivo << "id_cliente,id_prestamo,monto,tasa_interes,numero_cuotas,cuotas_restantes" << std::endl;
+    archivo << "id_cliente,id_prestamo,monto,tasa_interes,numero_cuotas,couta_mensual,cuotas_restantes" << std::endl;
 
     // Leer el archivo para encontrar los préstamos del cliente
     std::string linea;
-    while (std::getline(archivoLectura, linea))
+    while (getline(archivoLectura, linea))
     {
         std::istringstream iss(linea);
-        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotasRestantes;
+        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotaMen, cuotasRestantes;
 
         // Leer los valores de cada columna
-        std::getline(iss, idClienteFromFile, ',');
-        std::getline(iss, idPrestamo, ',');
-        std::getline(iss, monto, ',');
-        std::getline(iss, tasaInteres, ',');
-        std::getline(iss, numCuotas, ',');
-        std::getline(iss, cuotasRestantes, ',');
+        getline(iss, idClienteFromFile, ',');
+        getline(iss, idPrestamo, ',');
+        getline(iss, monto, ',');
+        getline(iss, tasaInteres, ',');
+        getline(iss, numCuotas, ',');
+        getline(iss, cuotaMen, ',' );
+        getline(iss, cuotasRestantes, ',');
 
         // Si el préstamo pertenece al cliente actual, escribirlo en el archivo prestamoscli.csv
         if (idCliente == idClienteFromFile)
         {
-            archivo << idClienteFromFile << ',' << idPrestamo << ',' << monto << ',' << tasaInteres << ',' << numCuotas << ',' << cuotasRestantes << std::endl;
+            archivo << idClienteFromFile << ',' << idPrestamo << ',' << monto << ',' << tasaInteres << ',' << numCuotas << ',' << cuotaMen << ',' << cuotasRestantes << std::endl;
         }
     }
 
@@ -128,7 +132,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     // Abrir el archivo prestamos.csv en modo lectura y escritura
     std::fstream file("./src/prestamos.csv", std::ios::in | std::ios::out);
 
-    // Revision de apertura del archivo
+    // Revisar la apertura del archivo
     if (!file.is_open())
     {
         std::cerr << "Error al abrir el archivo prestamos.csv" << std::endl;
@@ -142,17 +146,11 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     // Mostrar al usuario los préstamos disponibles para abonar
     std::cout << "Prestamos disponibles para el cliente " << idCliente << ":" << std::endl;
 
-    // Leer el archivo para contar el número de líneas
-    std::ifstream archivoLectura("./src/prestamos.csv");
-
-    // Cierra el archivo de lectura
-    archivoLectura.close();
-
     // Leer el archivo
     while (getline(file, line))
     {
         std::istringstream iss(line);
-        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotasRestantes;
+        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotaMen, cuotasRestantes;
 
         // Leer los valores de cada columna
         getline(iss, idClienteFromFile, ',');
@@ -160,13 +158,14 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
         getline(iss, monto, ',');
         getline(iss, tasaInteres, ',');
         getline(iss, numCuotas, ',');
+        getline(iss, cuotaMen, ',');
         getline(iss, cuotasRestantes, ',');
 
         // Si el préstamo pertenece al cliente actual, mostrarlo
         if (idCliente == idClienteFromFile)
         {
-            std::cout << "ID Prestamo: " << idPrestamo << " - Monto: " << monto
-                      << " - Cuotas restantes: " << cuotasRestantes << std::endl;
+            std::cout << "ID Prestamo: " << idPrestamo << " - Monto: " << monto << " - Cuota Mensual: " << cuotaMen
+                      << " - Numero de Cuotas restantes: " << cuotasRestantes << std::endl;
         }
     }
 
@@ -176,19 +175,22 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
     // Abrir el archivo nuevamente en modo lectura y escritura
     file.open("./src/prestamos.csv", std::ios::in | std::ios::out);
 
-    // Pedir al usuario que elija a cuál préstamo abonar (propio
+    // Pedir al usuario que elija a cuál préstamo abonar
     std::cout << "Ingrese el ID del prestamo al que desea abonar: ";
     std::string idPrestamoAbonar;
     std::cin >> idPrestamoAbonar;
 
-    // Estructura usada para almacenar las lineasa del archivo
-    std::vector<std::string> lines;
+    // Pedir al usuario la cantidad que desea abonar
+    double cantidadAbonar;
+    std::cout << "Ingrese la cantidad que desea abonar: ";
+    std::cin >> cantidadAbonar;
 
+    // Leer el archivo
+    std::vector<std::string> lines;
     while (getline(file, line))
     {
-        // Definicion de variables para valores de culumnas de cada interaccion
         std::istringstream iss(line);
-        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotasRestantes;
+        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotaMen, cuotasRestantes;
 
         // Leer los valores de cada columna
         getline(iss, idClienteFromFile, ',');
@@ -196,60 +198,48 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
         getline(iss, monto, ',');
         getline(iss, tasaInteres, ',');
         getline(iss, numCuotas, ',');
+        getline(iss, cuotaMen, ',');
         getline(iss, cuotasRestantes, ',');
 
-        // Si el préstamo pertenece al cliente actual, almacenar la línea
+        // Si el préstamo pertenece al cliente actual y es el seleccionado
         if (idCliente == idClienteFromFile && idPrestamo == idPrestamoAbonar)
         {
+            double cuotaMensual = std::stod(cuotaMen);
             int cuotasRestantesInt = std::stoi(cuotasRestantes);
-            cuotasRestantesInt--;
 
-            // Modificar la línea con la nueva cuotaRestante restandole 1 en el proceso
-            line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + std::to_string(cuotasRestantesInt);
+            // Si la cantidad abonada es mayor o igual a la cuota mensual, reducir las cuotas restantes
+            if (cantidadAbonar >= cuotaMensual)
+            {
+                cuotasRestantesInt--;
+                std::cout << "Abono realizado con éxito." << std::endl;
+            }
+            else
+            {
+                std::cout << "La cantidad abonada no es suficiente para reducir las cuotas restantes." << std::endl;
+            }
+
+            // Actualizar la línea con las cuotas restantes modificadas
+            line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + cuotaMen + ',' + std::to_string(cuotasRestantesInt);
         }
 
-        // Almacenar la línea (modificada o no) en el vector
+        // Almacenar la línea en el vector
         lines.push_back(line);
     }
 
     // Cerrar el archivo antes de escribir
     file.close();
 
-    // Verificar si el archivo ha cambiado
-    std::ifstream originalFile("./src/prestamos.csv");
-    std::string originalContent((std::istreambuf_iterator<char>(originalFile)), std::istreambuf_iterator<char>());
-    originalFile.close();
+    // Abrir el archivo en modo de escritura
+    file.open("./src/prestamos.csv", std::ios::out);
 
-    std::ostringstream modifiedContent;
-
-    // Escribir el contenido modificado
+    // Escribir todas las líneas en el archivo
     for (const auto &l : lines)
     {
-        modifiedContent << l << std::endl;
+        file << l << std::endl;
     }
 
-    // Comparar el contenido original con el modificado
-    if (originalContent != modifiedContent.str())
-    {
-        // Abrir el archivo en modo de escritura
-        std::ofstream outFile("./src/prestamos.csv");
-
-        // Escribir todas las líneas en el archivo
-        for (const auto &l : lines)
-        {
-            outFile << l << std::endl;
-        }
-
-        // Cerrar el archivo después de usarlo
-        outFile.close();
-
-        std::cout << "Abono realizado con éxito." << std::endl;
-    }
-    else
-    {
-        // En caso de que el contenido no sea igual
-        std::cout << "El ID del prestamo no coincide con los prestamos asociados al usuario" << std::endl;
-    }
+    // Cerrar el archivo después de usarlo
+    file.close();
 }
 
 // Metodo para abonar a un préstamo ageno
@@ -279,7 +269,7 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
     {
         // Definicion de variables para valores de culumnas de cada interacción
         std::istringstream iss(line);
-        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotasRestantes;
+        std::string idClienteFromFile, idPrestamo, monto, tasaInteres, numCuotas, cuotaMen, cuotasRestantes;
 
         // Leer los valores de cada columna
         getline(iss, idClienteFromFile, ',');
@@ -287,6 +277,7 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
         getline(iss, monto, ',');
         getline(iss, tasaInteres, ',');
         getline(iss, numCuotas, ',');
+        getline(iss, cuotaMen, ',' );
         getline(iss, cuotasRestantes, ',');
 
         // Si el préstamo pertenece al cliente actual, almacenar la línea
@@ -296,7 +287,7 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
             cuotasRestantesInt--;
 
             // Modificar la línea con la nueva cuotaRestante
-            line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + std::to_string(cuotasRestantesInt);
+            line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + cuotaMen + ',' + std::to_string(cuotasRestantesInt);
         }
 
         // Almacenar la línea (modificada o no) en el vector
