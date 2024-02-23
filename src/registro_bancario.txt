@@ -34,3 +34,7 @@ Tipo de operacion: Deposito
 ID cliente: 006
 Moneda: Colones
 Monto: 5000
+
+Tipo de operacion: Creacion de nuevo cliente
+Nombre: Darrel Sancho
+Identificacion: 123456987
