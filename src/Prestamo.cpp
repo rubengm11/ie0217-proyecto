@@ -237,14 +237,28 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
 
             // Actualizar la línea con las cuotas restantes modificadas
             line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + cuotaMen + ',' + std::to_string(cuotasRestantesInt);
+                
+                std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+                if (!archivoRegistro.is_open()) {
+                    std::cerr << "Error al abrir el archivo.\n";
+                    return;
+                }
+
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Abono a prestamo propio \n" << "Identificacion: " << idClienteFromFile << "\nMonto Total: "
+                                << monto <<"\nMonto abonado: " << cantidadAbonar << "\nCuotas Restanstes: " << std::to_string(cuotasRestantesInt) << "\nInteres: " << tasaInteres << "\n";
+
+                archivoRegistro.close();
         }
 
         // Almacenar la línea en el vector
         lines.push_back(line);
+
     }
 
     // Cerrar el archivo antes de escribir
     file.close();
+    
 
      // Verificar si el archivo ha cambiado
     std::ifstream originalFile("./src/prestamos.csv");
@@ -336,17 +350,28 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
         {
             double cuotaMensual = std::stod(cuotaMen);
             int cuotasRestantesInt = std::stoi(cuotasRestantes);
+            int montoInt = std::stoi(monto);
             // Si la cantidad abonada es mayor o igual a la cuota mensual, reducir las cuotas restantes
             if (cantidadAbonar >= cuotaMensual)
             {cuotasRestantesInt--;
             std::cout << "Abono realizado con éxito." << std::endl;
             }else
-            {
-                std::cout << "La cantidad abonada no es suficiente para reducir las cuotas restantes." << std::endl;
+            {   monto = std::to_string(montoInt);
+                std::cout << "La cantidad abonada no es suficiente para reducir las cuotas restantes o \n" << std::endl;
             }
 
             // Modificar la línea con la nueva cuotaRestante
             line = idClienteFromFile + ',' + idPrestamo + ',' + monto + ',' + tasaInteres + ',' + numCuotas + ',' + cuotaMen + ',' + std::to_string(cuotasRestantesInt);
+            std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+                if (!archivoRegistro.is_open()) {
+                    std::cerr << "Error al abrir el archivo.\n";
+                    return;
+                }
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Abono a prestamo ajeno \n" << "Identificacion: " << idClienteAbonador << "\nId Prestamo: " << idPrestamo << "\nMonto Total: "
+                                << monto <<"\nMonto abonado: " << cantidadAbonar << "\nCuotas Restanstes: " << std::to_string(cuotasRestantesInt) << "\nInteres: " << tasaInteres << "\n";
+
+                archivoRegistro.close();
         }
 
         // Almacenar la línea (modificada o no) en el vector
@@ -384,11 +409,10 @@ void Prestamo::abonarPrestamoAgeno(std::string idClienteAbonador, std::string id
         // Cerrar el archivo después de usarlo
         outFile.close();
 
-        std::cout << "Abono realizado con éxito." << std::endl;
     }
     else
     {
         // En caso de que el contenido no sea igual
-        std::cout << "El ID del prestamo coincide con los prestamos asociados" << std::endl;
+        std::cout << "El ID del prestamo  no coincide con los prestamos asociados" << std::endl;
     }
 }
