@@ -1,12 +1,12 @@
 nombre,numero_id,tiene_cuenta_colones,tiene_cuenta_dolares,saldo_cuenta_colones,saldo_cuenta_dolares
-Ana Garcia,001,1,0,200,0
+Ana Garcia,001,1,0,275,0
 Carlos Rodriguez,002,0,1,0,120
 Elena Lopez,003,1,1,100,70
 David Fernandez,004,1,0,122,0
 Laura Martinez,005,1,0,300,0
 Roberto Ramirez,006,1,1,100,200
-Maria Torres,007,0,1,0,50
-Javier Diaz,008,1,0,150,0
+Maria Torres,007,0,1,0,5050
+Javier Diaz,008,1,0,75,0
 Isabel Perez,009,1,0,50000,0
 Francisco Herrera,010,1,1,130,500
 Gabriel Rodriguez,987654321,1,0,300,0

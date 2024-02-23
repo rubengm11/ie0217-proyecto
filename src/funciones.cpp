@@ -212,8 +212,31 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             }
             if (esDepositoEnColones) {
                 clienteActual.depositarEnCuentaColones(monto);
+                // Escritura en el archivo de registro bancario
+                std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+                if (!archivoRegistro.is_open()) {
+                std::cerr << "Error al abrir el archivo.\n";
+                return;
+                }
+
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Deposito\n" << "ID cliente: " << id_cliente << "\nMoneda: " << "Colones" << "\nMonto: " << monto << "\n";
+                archivoRegistro.close();
+
             } else {
                 clienteActual.depositarEnCuentaDolares(monto);
+                // Escritura en el archivo de registro bancario
+                std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+                if (!archivoRegistro.is_open()) {
+                std::cerr << "Error al abrir el archivo.\n";
+                return;
+                }
+
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Deposito\n" << "ID cliente: " << id_cliente << "\nMoneda: " << "Dolares" << "\nMonto: " << monto << "\n";
+                archivoRegistro.close();
             }
             break;
             }
@@ -231,8 +254,30 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             bool resultado;
             if (esRetiroEnColones) {
                 resultado = clienteActual.retirarDeCuentaColones(monto);
+                // Escritura en el archivo de registro bancario
+                std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+                if (!archivoRegistro.is_open()) {
+                std::cerr << "Error al abrir el archivo.\n";
+                return;
+                }
+
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Retiro\n" << "ID cliente: " << id_cliente << "\nMoneda: " << "Colones" << "\nMonto: " << monto << "\n";
+                archivoRegistro.close();
             } else {
                 resultado = clienteActual.retirarDeCuentaDolares(monto);
+                // Escritura en el archivo de registro bancario
+                std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+                if (!archivoRegistro.is_open()) {
+                std::cerr << "Error al abrir el archivo.\n";
+                return;
+                }
+
+                // Escribir los datos del nuevo cliente en el archivo
+                archivoRegistro << "\nTipo de operacion: Deposito\n" << "ID cliente: " << id_cliente << "\nMoneda: " << "Dolares" << "\nMonto: " << monto << "\n";
+                archivoRegistro.close();
             }
             if (!resultado) {
                 cout << "No se pudo completar el retiro." << endl;
@@ -241,94 +286,107 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
         }
         case 3: {
             cout << "Realizando Transferencia...\n";
-    double montoTransferir;
-    string idClienteDestino;
-    int tipoMoneda;
-    bool esRetiroExitoso = false, clienteEncontrado = false, tieneCuentaEnMoneda = false;
+            double montoTransferir;
+            string idClienteDestino;
+            int tipoMoneda;
+            bool esRetiroExitoso = false, clienteEncontrado = false, tieneCuentaEnMoneda = false;
 
-    // Solicitar información de la transferencia
-    cout << "Ingrese el monto a transferir: ";
-    cin >> montoTransferir;
-    cout << "Ingrese el tipo de moneda (1 para Colones, 2 para Dólares): ";
-    cin >> tipoMoneda;
-    cout << "Ingrese el ID del cliente destino: ";
-    cin >> idClienteDestino;
+            // Solicitar información de la transferencia
+            cout << "Ingrese el monto a transferir: ";
+            cin >> montoTransferir;
+            cout << "Ingrese el tipo de moneda (1 para Colones, 2 para Dólares): ";
+            cin >> tipoMoneda;
+            cout << "Ingrese el ID del cliente destino: ";
+            cin >> idClienteDestino;
 
-    // Verificar que el monto es positivo y el tipo de moneda es válido
-    if (montoTransferir <= 0 || (tipoMoneda != 1 && tipoMoneda != 2)) {
-        cout << "Operación inválida.\n";
-        break;
-    }
+            // Verificar que el monto es positivo y el tipo de moneda es válido
+            if (montoTransferir <= 0 || (tipoMoneda != 1 && tipoMoneda != 2)) {
+                cout << "Operación inválida.\n";
+                break;
+            }
 
-    vector<string> lineasActualizadas;
-    string linea;
-    fstream archivoClientes("./src/clientes.csv", ios::in);
-    if (!archivoClientes.is_open()) {
-        cout << "Error al abrir el archivo.\n";
-        break;
-    }
+            vector<string> lineasActualizadas;
+            string linea;
+            fstream archivoClientes("./src/clientes.csv", ios::in);
+            if (!archivoClientes.is_open()) {
+                cout << "Error al abrir el archivo.\n";
+                break;
+            }
 
-    // Leer todo el archivo y buscar al cliente destino al mismo tiempo
-    while (getline(archivoClientes, linea)) {
-    stringstream ss(linea);
-    string segmento;
-    vector<string> segmentos;
-    while (getline(ss, segmento, ',')) {
-        segmentos.push_back(segmento);
-    }
+            // Leer todo el archivo y buscar al cliente destino al mismo tiempo
+            while (getline(archivoClientes, linea)) {
+            stringstream ss(linea);
+            string segmento;
+            vector<string> segmentos;
+            while (getline(ss, segmento, ',')) {
+                segmentos.push_back(segmento);
+            }
 
-    if (segmentos[1] == idClienteDestino && ((tipoMoneda == 1 && segmentos[2] == "1") || (tipoMoneda == 2 && segmentos[3] == "1"))) {
-        clienteEncontrado = true;
-        tieneCuentaEnMoneda = true;
-        // Actualizar el saldo del cliente destino
-        double saldoActual = stod(segmentos[tipoMoneda + 3]);
-        saldoActual += montoTransferir; // Asumiendo que segmentos[4] o segmentos[5] contiene el saldo
-        int saldoSinDecimales = static_cast<int>(round(saldoActual)); // Redondea y convierte a entero
-        segmentos[tipoMoneda + 3] = to_string(saldoSinDecimales);
-    }
+            if (segmentos[1] == idClienteDestino && ((tipoMoneda == 1 && segmentos[2] == "1") || (tipoMoneda == 2 && segmentos[3] == "1"))) {
+                clienteEncontrado = true;
+                tieneCuentaEnMoneda = true;
+                // Actualizar el saldo del cliente destino
+                double saldoActual = stod(segmentos[tipoMoneda + 3]);
+                saldoActual += montoTransferir; // Asumiendo que segmentos[4] o segmentos[5] contiene el saldo
+                int saldoSinDecimales = static_cast<int>(round(saldoActual)); // Redondea y convierte a entero
+                segmentos[tipoMoneda + 3] = to_string(saldoSinDecimales);
+            }
 
-    // Reconstruir la línea y agregarla a lineasActualizadas
-    string lineaActualizada;
-    for (size_t i = 0; i < segmentos.size(); i++) {
-        lineaActualizada += segmentos[i];
-        if (i < segmentos.size() - 1) lineaActualizada += ",";
-    }
-    lineasActualizadas.push_back(lineaActualizada);
-}
+            // Reconstruir la línea y agregarla a lineasActualizadas
+            string lineaActualizada;
+            for (size_t i = 0; i < segmentos.size(); i++) {
+                lineaActualizada += segmentos[i];
+                if (i < segmentos.size() - 1) lineaActualizada += ",";
+            }
+            lineasActualizadas.push_back(lineaActualizada);
+            }
 
 
 
-    archivoClientes.close();
+            archivoClientes.close();
 
-    // Verificar si el cliente destino fue encontrado y tiene cuenta en la moneda especificada
-    if (!clienteEncontrado || !tieneCuentaEnMoneda) {
-        cout << "Cliente destino no encontrado o no tiene cuenta en la moneda especificada.\n";
-        break;
-    }
+            // Verificar si el cliente destino fue encontrado y tiene cuenta en la moneda especificada
+            if (!clienteEncontrado || !tieneCuentaEnMoneda) {
+                cout << "Cliente destino no encontrado o no tiene cuenta en la moneda especificada.\n";
+                break;
+            }
 
-    // Intentar retirar fondos solo después de verificar que el cliente destino es válido
-    esRetiroExitoso = (tipoMoneda == 1) ? clienteActual.retirarDeCuentaColones(montoTransferir) 
-                                        : clienteActual.retirarDeCuentaDolares(montoTransferir);
-    if (!esRetiroExitoso) {
-        cout << "Fondos insuficientes para realizar la transferencia.\n";
-        break;
-    }
+            // Intentar retirar fondos solo después de verificar que el cliente destino es válido
+            esRetiroExitoso = (tipoMoneda == 1) ? clienteActual.retirarDeCuentaColones(montoTransferir) 
+                                                : clienteActual.retirarDeCuentaDolares(montoTransferir);
+            if (!esRetiroExitoso) {
+                cout << "Fondos insuficientes para realizar la transferencia.\n";
+                break;
+            }
 
-    // Abrir el archivo nuevamente, esta vez para escribir
-    archivoClientes.open("./src/clientes.csv", ios::out | ios::trunc);
-    if (!archivoClientes.is_open()) {
-        cout << "Error al abrir el archivo para actualización.\n";
-        break;
-    }
+            // Abrir el archivo nuevamente, esta vez para escribir
+            archivoClientes.open("./src/clientes.csv", ios::out | ios::trunc);
+            if (!archivoClientes.is_open()) {
+                cout << "Error al abrir el archivo para actualización.\n";
+                break;
+            }
 
-    // Escribir todas las líneas actualizadas de vuelta al archivo
-    for (const auto& lineaActualizada : lineasActualizadas) {
-        archivoClientes << lineaActualizada << "\n";
-    }
-    archivoClientes.close();
+            // Escribir todas las líneas actualizadas de vuelta al archivo
+            for (const auto& lineaActualizada : lineasActualizadas) {
+                archivoClientes << lineaActualizada << "\n";
+            }
+            archivoClientes.close();
 
-    cout << "Transferencia realizada con éxito.\n";
-    break;
+            cout << "Transferencia realizada con éxito.\n";
+
+            // Escritura en el archivo de registro bancario
+            std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+            if (!archivoRegistro.is_open()) {
+            std::cerr << "Error al abrir el archivo.\n";
+            return;
+            }
+
+            // Escribir los datos del nuevo cliente en el archivo
+            archivoRegistro << "\nTipo de operacion: Transferencia\n" << "Cuenta origen: " << id_cliente << "\nCuenta destino: " 
+                            << idClienteDestino << "\nMoneda (1 Colones, 2 Dólares): " << tipoMoneda << "\nMonto: " << montoTransferir << "\n";
+            archivoRegistro.close();
+            break;
         }
             
         case 4:

@@ -12,3 +12,13 @@ Interes: 3
 Tipo de operacion: Creacion de nuevo cliente
 Nombre: Aurelio Cordoba
 Identificacion: 456328574
+
+Tipo de operacion: Retiro
+ID cliente: 007
+Moneda: Colones
+Monto: 25
+
+Tipo de operacion: Deposito
+ID cliente: 007
+Moneda: Dolares
+Monto: 5000
