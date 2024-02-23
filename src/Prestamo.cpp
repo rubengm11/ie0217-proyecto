@@ -70,6 +70,17 @@ void Prestamo::guardarPrestamo(int moneda, std::string idCliente)
 
     // Cierra el archivo
     archivo.close();
+    std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+        if (!archivoRegistro.is_open()) {
+        std::cerr << "Error al abrir el archivo.\n";
+        return;
+        }
+
+    // Escribir los datos del nuevo cliente en el archivo
+        archivoRegistro << "\nTipo de operacion: Creacion prestamo \n" << "Identificacion: " << idCliente << "\nId Prestamo: " << moneda << tipoPrestamo << idCliente << numeroPrestamos
+        << "\nMonto Total: "<< montoPrestamo << "\nCuotas: " << cantidadCuotas << "\nInteres: " << tasaInteresAnual << "\n";
+
+        archivoRegistro.close();
 }
 
 
@@ -245,7 +256,7 @@ void Prestamo::abonarPrestamoPropio(std::string idCliente)
                 }
 
                 // Escribir los datos del nuevo cliente en el archivo
-                archivoRegistro << "\nTipo de operacion: Abono a prestamo propio \n" << "Identificacion: " << idClienteFromFile << "\nMonto Total: "
+                archivoRegistro << "\nTipo de operacion: Abono a prestamo propio \n" << "Identificacion: " << idClienteFromFile << "\nId Prestamo: " << idPrestamo <<"\nMonto Total: "
                                 << monto <<"\nMonto abonado: " << cantidadAbonar << "\nCuotas Restanstes: " << std::to_string(cuotasRestantesInt) << "\nInteres: " << tasaInteres << "\n";
 
                 archivoRegistro.close();
