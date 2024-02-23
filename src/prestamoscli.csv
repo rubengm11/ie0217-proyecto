@@ -1,4 +1,4 @@
 id_cliente,id_prestamo,monto,tasa_interes,numero_cuotas,couta_mensual,cuotas_restantes
-001,100011,10000,10,24,461.449,18
+001,100011,10000,10,24,461.449,17
 001,000012,800000,8,36,25069.1,33
 001,020013,20000,4.5,90,262.24,88

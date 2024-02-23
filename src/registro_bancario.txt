@@ -38,3 +38,50 @@ Monto: 5000
 Tipo de operacion: Creacion de nuevo cliente
 Nombre: Darrel Sancho
 Identificacion: 123456987
+
+Tipo de operacion: Transferencia
+Cuenta origen: 889900112
+Cuenta destino: 111223344
+Moneda (1 Colones, 2 Dólares): 1
+Monto: 45
+
+Tipo de operacion: Deposito
+ID cliente: 234567890
+Moneda: Colones
+Monto: 5000
+
+Tipo de operacion: Retiro
+ID cliente: 111223344
+Moneda: Colones
+Monto: 50000
+
+Tipo de operacion: Creacion prestamo 
+Identificacion: 765432111
+Id Prestamo: 107654321111
+Monto Total: 5000
+Cuotas: 24
+Interes: 10
+
+Tipo de operacion: Abono a prestamo propio 
+Identificacion: 765432111
+Id Prestamo: 107654321111
+Monto Total: 5000
+Monto abonado: 300
+Cuotas Restanstes: 23
+Interes: 10
+
+Tipo de operacion: Abono a prestamo propio 
+Identificacion: 765432111
+Id Prestamo: 107654321111
+Monto Total: 5000
+Monto abonado: 200
+Cuotas Restanstes: 23
+Interes: 10
+
+Tipo de operacion: Abono a prestamo ajeno 
+Identificacion: 007
+Id Prestamo: 100011
+Monto Total: 10000
+Monto abonado: 500
+Cuotas Restanstes: 17
+Interes: 10

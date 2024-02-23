@@ -239,8 +239,20 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             cout << "Realizando Depósito...\n";
             // Lógica para depósito
             bool esDepositoEnColones;
-            cout << "¿El depósito es en colones? (1: Sí, 0: No): ";
-            cin >> esDepositoEnColones;
+
+            do {
+                cout << "¿El depósito es en colones? (1: Sí, 0: No): ";
+                cin >> esDepositoEnColones;
+                // Verificar si la entrada es válida
+                if (cin.fail() || esDepositoEnColones > 1 || esDepositoEnColones < 0) {
+                    cin.clear();  // Limpiar el estado de error
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+                    cout << "Error: Ingrese una opcion válida." << std::endl;
+                } else {
+                    break;  // Salir del bucle si la entrada es válida
+                }
+            } while (true);
+
             double monto;
             cout << "Ingrese el monto a depositar: ";
             while (!(cin >> monto) || monto <= 0) {
@@ -280,8 +292,18 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             }
         case 2:{
             bool esRetiroEnColones;
-            cout << "¿El retiro es en colones? (1: Sí, 0: No): ";
-            cin >> esRetiroEnColones;
+            do {
+                cout << "¿El retiro es en colones? (1: Sí, 0: No): ";
+                cin >> esRetiroEnColones;
+                // Verificar si la entrada es válida
+                if (cin.fail() || esRetiroEnColones > 1 || esRetiroEnColones < 0) {
+                    cin.clear();  // Limpiar el estado de error
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+                    cout << "Error: Ingrese una opcion válida." << std::endl;
+                } else {
+                    break;  // Salir del bucle si la entrada es válida
+                }
+            } while (true);
             double monto;
             cout << "Ingrese el monto a retirar: ";
             while (!(cin >> monto) || monto <= 0) {
@@ -329,11 +351,29 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
             int tipoMoneda;
             bool esRetiroExitoso = false, clienteEncontrado = false, tieneCuentaEnMoneda = false;
 
-            // Solicitar información de la transferencia
+            do {
             cout << "Ingrese el monto a transferir: ";
-            cin >> montoTransferir;
-            cout << "Ingrese el tipo de moneda (1 para Colones, 2 para Dólares): ";
-            cin >> tipoMoneda;
+            if (!(cin >> montoTransferir) || montoTransferir <= 0) {
+                cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            } while (montoTransferir <= 0);
+
+            do {
+                cout << "Ingrese el tipo de moneda (1 para Colones, 2 para Dólares): ";
+                cin >> tipoMoneda;
+                // Verificar si la entrada es válida
+                if (cin.fail() || tipoMoneda > 2 || tipoMoneda < 1) {
+                    cin.clear();  // Limpiar el estado de error
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+                    cout << "Error: Ingrese una opcion válida." << std::endl;
+                } else {
+                    break;  // Salir del bucle si la entrada es válida
+                }
+            } while (true);
+
+
             cout << "Ingrese el ID del cliente destino: ";
             cin >> idClienteDestino;
 
@@ -624,11 +664,16 @@ void solicitarInformacionPrestamos() {
         std::cout << "Digite que tipo de opcion deseada\n";
         std::cout << "1. Ver la informacion de prestamos hechos por el banco\n";
         std::cout << "2. Ver la informacion de un prestamo personalizado\n";
-        std::cin >> num_info_prest;
-        if (num_info_prest != 1 && num_info_prest != 2) {
-            std::cout << "Opcion no valida. Por favor, seleccione 1 o 2.\n";
-        }
-    } while (num_info_prest != 1 && num_info_prest != 2);
+        cin >> num_info_prest;
+        // Verificar si la entrada es válida
+        if (cin.fail() || num_info_prest > 2 || num_info_prest < 1) {
+            cin.clear();  // Limpiar el estado de error
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');  
+            cout << "Error: Ingrese una opcion válida." << std::endl;
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+          }
+    } while (true);
  
     double tasaInteresAnual;
     int cantidadCuotas;
