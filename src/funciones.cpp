@@ -318,7 +318,6 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
         case 4:
             cout << "Generando Reporte sobre préstamos propios en el archivo prestamoscli.csv ...\n";
             prestamoSolicitado.guardarPrestamosCliente(id_cliente);
-            cout << "Se han guardado los datos en el archivo prestamoscli.csv ...\n";
             break;
         case 5:
             cout << "Accediendo a Certificado de Depósito a Plazo (CDP)...\n";
@@ -364,10 +363,8 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
 
     } while (moneda != 0 && moneda != 1);
         long monto;
-        cout << "Seleccione el monto a solicitar:\n";
-        cin >> monto;
          do {
-        cout << "Ingrese el monto del prestamo: ";
+        cout << "Seleccione el monto a solicitar:\n";
         if (!(cin >> monto) || monto <= 0) {
             cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
             cin.clear();
@@ -423,16 +420,17 @@ void realizarTransaccion(int tipoTransaccion, string id_cliente, Cliente& client
         break;
         case 7:
             // Funcion para abonar un prestamo propio
-            prestamoSolicitado.abonarPrestamoPropio(id_cliente);
             cout << "Realizando Abono a préstamo propio...\n";
+            prestamoSolicitado.abonarPrestamoPropio(id_cliente);
+           
         break;
         case 8:
             // Lógica para abono a préstamo de otra persona
+            cout << "Realizando Abono a préstamo de otra persona...\n";
             cout << "Digite el Id del Prestamo a Abonar:\n";
             cin >> idPrestamoAbonar;
 
             prestamoSolicitado.abonarPrestamoAgeno(id_cliente, idPrestamoAbonar);
-            cout << "Realizando Abono a préstamo de otra persona...\n";
             break;
         default:
             cout << "Opción no válida. Por favor, ingrese un número del 1 al 8.\n";
@@ -564,22 +562,43 @@ void solicitarInformacionPrestamos() {
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 10;
                     cantidadCuotas = 24;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                    // Solicitar y validar el monto del préstamo
+                        do {
+                            cout << "Ingrese el monto del prestamo: ";
+                            if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                                cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            }
+                        } while (montoPrestamo <= 0);
                     break;
                 case 1:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 8;
                     cantidadCuotas = 36;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                // Solicitar y validar el monto del préstamo
+                    do {
+                        cout << "Ingrese el monto del prestamo: ";
+                        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        }
+    } while (montoPrestamo <= 0);
                     break;
                 case 2:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 6.5;
                     cantidadCuotas = 48;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                // Solicitar y validar el monto del préstamo
+                    do {
+                        cout << "Ingrese el monto del prestamo: ";
+                        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        }
+                    } while (montoPrestamo <= 0);
                     break;
                 default:
                     cout << "Opcion no valida. Por favor, seleccione una opcion valida.\n";
@@ -606,22 +625,43 @@ void solicitarInformacionPrestamos() {
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 4.5;
                     cantidadCuotas = 360;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                // Solicitar y validar el monto del préstamo
+                    do {
+                        cout << "Ingrese el monto del prestamo: ";
+                        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        }
+                    } while (montoPrestamo <= 0);
                     break;
                 case 1:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 3.8;
                     cantidadCuotas = 300;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                // Solicitar y validar el monto del préstamo
+                    do {
+                        cout << "Ingrese el monto del prestamo: ";
+                        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        }
+                    } while (montoPrestamo <= 0);
                     break;
                 case 2:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 4;
                     cantidadCuotas = 336;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                // Solicitar y validar el monto del préstamo
+                    do {
+                        cout << "Ingrese el monto del prestamo: ";
+                        if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                            cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        }
+                    } while (montoPrestamo <= 0);
                     break;
                 default:
                     cout << "Opcion no valida. Por favor, seleccione una opcion valida\n";
@@ -646,22 +686,43 @@ void solicitarInformacionPrestamos() {
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 6;
                     cantidadCuotas = 60;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+                    // Solicitar y validar el monto del préstamo
+                    do {
+                    cout << "Ingrese el monto del prestamo: ";
+                    if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                        cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    }
+                } while (montoPrestamo <= 0);
                     break;
                 case 1:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 5.2;
                     cantidadCuotas = 78;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+            // Solicitar y validar el monto del préstamo
+                do {
+                    cout << "Ingrese el monto del prestamo: ";
+                    if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                        cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    }
+                } while (montoPrestamo <= 0);
                     break;
                 case 2:
                     tipo = Prestamo::PERSONAL;
                     tasaInteresAnual = 4.5;
                     cantidadCuotas = 90;
-                    cout << "Ingrese el monto a solicitar:\n";
-                    cin >> montoPrestamo;
+            // Solicitar y validar el monto del préstamo
+                do {
+                    cout << "Ingrese el monto del prestamo: ";
+                    if (!(cin >> montoPrestamo) || montoPrestamo <= 0) {
+                        cout << "Error: Por favor ingrese un valor numerico positivo." << endl;
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    }
+                } while (montoPrestamo <= 0);
                     break;
                 default:
                     cout << "Opcion no valida. Por favor, seleccione una opcion valida.\n";
@@ -675,8 +736,6 @@ void solicitarInformacionPrestamos() {
     case 2:
     cout << "Introduzca los datos de interes :\n";
     int tipo;
-    cout << "Tipo de prestamo (0: Personal, 1: Hipotecario, 2: Prendario): ";
-    cin >> tipo;
     do {
         cout << "Seleccione uno de los prestamos prendarios:\n";
         cout << "Tipo de prestamo (0: Personal, 1: Hipotecario, 2: Prendario): ";
@@ -724,7 +783,7 @@ void solicitarInformacionPrestamos() {
     // Se crea el objeto Prestamo con los datos ingresados
     Prestamo prestamo(Prestamo::PERSONAL, tasaInteresAnual, cantidadCuotas, montoPrestamo);
     // Se abre el archivo CSV para escritura
-    ofstream archivo("tabla_prestamo_solicitado.csv");
+    ofstream archivo("./src/tabla_prestamo_solicitado.csv");
     if (!archivo.is_open()) {
         cout << "Error al abrir el archivo." << endl;
     }
