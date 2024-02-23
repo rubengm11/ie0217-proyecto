@@ -53,11 +53,32 @@ void agregarCliente(){
         }
     } while (true);
 
-    std::cout << "¿Tiene cuenta en colones? (1 para sí, 0 para no): ";
-    std::cin >> tieneCuentaColones;
+    do {
+        std::cout << "¿Tiene cuenta en colones? (1 para sí, 0 para no): ";
+        std::cin >> tieneCuentaColones;
 
-    std::cout << "¿Tiene cuenta en dólares? (1 para sí, 0 para no): ";
-    std::cin >> tieneCuentaDolares;
+        if (std::cin.fail() || (tieneCuentaColones != 0 && tieneCuentaColones != 1)) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+            std::cout << "Opción inválida. Por favor, ingrese 1 para sí o 0 para no.\n";
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
+    
+
+    do {
+        std::cout << "¿Tiene cuenta en dolares? (1 para sí, 0 para no): ";
+        std::cin >> tieneCuentaDolares;
+
+        if (std::cin.fail() || (tieneCuentaDolares != 0 && tieneCuentaDolares != 1)) {
+            std::cin.clear();  // Limpiar el estado de error
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+            std::cout << "Opción inválida. Por favor, ingrese 1 para sí o 0 para no.\n";
+        } else {
+            break;  // Salir del bucle si la entrada es válida
+        }
+    } while (true);
 
     while (true){
         if (!tieneCuentaColones & !tieneCuentaDolares){
@@ -66,15 +87,35 @@ void agregarCliente(){
 
         } else {
             if (tieneCuentaColones) {
-            std::cout << "Ingrese el saldo en colones: ";
-            std::cin >> saldoCuentaColones;
+                do {
+                    std::cout << "Ingrese el saldo en colones: ";
+                    std::cin >> saldoCuentaColones;
+
+                    if (std::cin.fail() || saldoCuentaColones < 0) {
+                        std::cin.clear();  // Limpiar el estado de error
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+                        std::cout << "Entrada inválida. Por favor, ingrese un número positivo.\n";
+                    } else {
+                        break;  // Salir del bucle si la entrada es válida
+                    }
+                } while (true);
         } else {
             saldoCuentaColones = 0;
         }
 
         if (tieneCuentaDolares) {
-            std::cout << "Ingrese el saldo en dólares: ";
-            std::cin >> saldoCuentaDolares;
+            do {
+                std::cout << "Ingrese el saldo en colones: ";
+                std::cin >> saldoCuentaColones;
+
+                if (std::cin.fail() || saldoCuentaColones < 0) {
+                    std::cin.clear();  // Limpiar el estado de error
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
+                    std::cout << "Entrada inválida. Por favor, ingrese un número positivo.\n";
+                } else {
+                    break;  // Salir del bucle si la entrada es válida
+                }
+            } while (true);
         } else {
             saldoCuentaDolares = 0;
         }
@@ -108,9 +149,6 @@ void agregarCliente(){
         archivoRegistro << "\nTipo de operacion: Creacion de nuevo cliente\n" << "Nombre: " << nombre << "\nIdentificacion: " << numeroID << "\n";
 
         archivoRegistro.close();
-
-
-
         break;
 
         }
