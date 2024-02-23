@@ -36,7 +36,7 @@ void agregarCliente(){
     cout << "Agregando un nuevo cliente" << endl;
     string nombre, numeroID;
     int tieneCuentaColones, tieneCuentaDolares;
-    double saldoCuentaColones, saldoCuentaDolares;
+    int saldoCuentaColones, saldoCuentaDolares;
 
     // Solicitar al usuario los datos del nuevo cliente
     std::cout << "Ingrese el nombre del cliente: ";
@@ -105,10 +105,10 @@ void agregarCliente(){
 
         if (tieneCuentaDolares) {
             do {
-                std::cout << "Ingrese el saldo en colones: ";
-                std::cin >> saldoCuentaColones;
+                std::cout << "Ingrese el saldo en dolares: ";
+                std::cin >> saldoCuentaDolares;
 
-                if (std::cin.fail() || saldoCuentaColones < 0) {
+                if (std::cin.fail() || saldoCuentaDolares < 0) {
                     std::cin.clear();  // Limpiar el estado de error
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Descartar la entrada incorrecta
                     std::cout << "Entrada inválida. Por favor, ingrese un número positivo.\n";

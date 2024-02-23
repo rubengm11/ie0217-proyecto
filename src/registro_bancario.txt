@@ -85,3 +85,52 @@ Monto Total: 10000
 Monto abonado: 500
 Cuotas Restanstes: 17
 Interes: 10
+
+
+
+
+Tipo de operacion: Creacion de nuevo cliente
+Nombre: Juan Caballero
+Identificacion: 456321524
+
+Tipo de operacion: Creacion de nuevo cliente
+Nombre: hehehe
+Identificacion: 456325896
+
+Tipo de operacion: Creacion de nuevo cliente
+Nombre: Keylor Chavez
+Identificacion: hwefhwfjw
+
+Tipo de operacion: Deposito
+ID cliente: 456328574
+Moneda: Dolares
+Monto: 5000
+
+Tipo de operacion: Transferencia
+Cuenta origen: 456328574
+Cuenta destino: 111223344
+Moneda (1 Colones, 2 Dólares): 2
+Monto: 2500
+
+Tipo de operacion: Creacion prestamo 
+Identificacion: 111223344
+Id Prestamo: 021112233441
+Monto Total: 5000000
+Cuotas: 90
+Interes: 4.5
+
+Tipo de operacion: Abono a prestamo propio 
+Identificacion: 001
+Id Prestamo: 020013
+Monto Total: 20000
+Monto abonado: 200
+Cuotas Restanstes: 88
+Interes: 4.5
+
+Tipo de operacion: Abono a prestamo propio 
+Identificacion: 001
+Id Prestamo: 020013
+Monto Total: 20000
+Monto abonado: 500
+Cuotas Restanstes: 87
+Interes: 4.5
