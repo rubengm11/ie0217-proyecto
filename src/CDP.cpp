@@ -20,4 +20,20 @@ void CDP::crearCDP() {
     std::cout << "Tasa de interés: " << interes << "%\n";
 
     archivo.close();
+
+    std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+    if (!archivoRegistro.is_open()) {
+        std::cerr << "Error al abrir el archivo.\n";
+        return;
+    }
+
+    // Escribir los datos del nuevo cliente en el archivo
+    archivoRegistro << "\nTipo de operacion: Creacion de Certificado de deposito a plazo\n" << "Identificacion: " << id_usuario << "\nMoneda: " << moneda<< "\nMonto: "
+                    << monto << "\nPlazo: " << plazo << "\nInteres: " << interes << "\n";
+
+    archivoRegistro.close();
+
+
+
 }

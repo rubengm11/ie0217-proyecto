@@ -95,6 +95,22 @@ void agregarCliente(){
         archivo.close();
 
         std::cout << "Cliente agregado exitosamente.\n";
+
+        // Escritura en el archivo de registro bancario
+        std::ofstream archivoRegistro("./src/registro_bancario.txt", std::ios::app);
+
+        if (!archivoRegistro.is_open()) {
+            std::cerr << "Error al abrir el archivo.\n";
+            return;
+        }
+
+        // Escribir los datos del nuevo cliente en el archivo
+        archivoRegistro << "\nTipo de operacion: Creacion de nuevo cliente\n" << "Nombre: " << nombre << "\nIdentificacion: " << numeroID << "\n";
+
+        archivoRegistro.close();
+
+
+
         break;
 
         }

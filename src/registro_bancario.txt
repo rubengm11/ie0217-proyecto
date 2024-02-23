@@ -1,0 +1,14 @@
+Este es el archivo de registro del Banco Grupo D
+
+
+
+Tipo de operacion: Creacion de Certificado de deposito a plazo
+Identificacion: 006
+Moneda: 0
+Monto: 50000
+Plazo: 17
+Interes: 3
+
+Tipo de operacion: Creacion de nuevo cliente
+Nombre: Aurelio Cordoba
+Identificacion: 456328574
