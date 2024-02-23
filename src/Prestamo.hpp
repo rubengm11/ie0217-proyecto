@@ -1,3 +1,8 @@
+/**
+ * @file Prestamo.hpp
+ * @brief Definición de la clase Prestamo
+ */
+
 #ifndef PRESTAMO_HPP
 #define PRESTAMO_HPP
 
@@ -15,25 +20,50 @@ public:
         PRENDARIO
     };
 
-    // Constructor predeterminado de la clase Prestamo
+    /**
+     * @brief Constructor predeterminado de la clase Prestamo
+     */
     Prestamo();
 
-    // Constructor de la clase Prestamo con parámetros
+    /**
+     * @brief Constructor de la clase Prestamo con parámetros
+     * @param tipo Tipo de préstamo
+     * @param tasaInteresAnual Tasa de interés anual del préstamo
+     * @param cantidadCuotas Cantidad de cuotas del préstamo
+     * @param montoPrestamo Monto del préstamo
+     */
     Prestamo(Tipo tipo, double tasaInteresAnual, int cantidadCuotas, long montoPrestamo);
 
-    // Metodo para calcular la cuota mensual del préstamo
+    /**
+     * @brief Método para calcular la cuota mensual del préstamo
+     * @return Cuota mensual calculada
+     */
     double calcularCuotaMensual();
 
-    // Metodo para guardar información del préstamo en el archivo de texto prestamos.csv
+    /**
+     * @brief Método para guardar información del préstamo en el archivo de texto prestamos.csv
+     * @param moneda Moneda en la que se realiza el préstamo (1 para colones, 2 para dólares)
+     * @param idCliente Identificación del cliente que solicita el préstamo
+     */
     void guardarPrestamo(int moneda, std::string idCliente);
 
-    // Metodo para seleccionar prestamos
+    /**
+     * @brief Método para seleccionar préstamos de un cliente específico
+     * @param idCliente Identificación del cliente
+     */
     void guardarPrestamosCliente(std::string idCliente);
 
-    // Metodo para abonar a un préstamo propio
+    /**
+     * @brief Método para abonar a un préstamo propio
+     * @param idCliente Identificación del cliente que abona al préstamo
+     */
     void abonarPrestamoPropio(std::string idCliente);
 
-    // Metodo para abonar a un préstamo ageno
+    /**
+     * @brief Método para abonar a un préstamo ajeno
+     * @param idClienteAbonador Identificación del cliente que realiza el abono
+     * @param idPrestamoAbonar Identificación del préstamo al que se abona
+     */
     void abonarPrestamoAgeno(std::string idClienteAbonador, std::string idPrestamoAbonar);
 
 private:
@@ -43,8 +73,9 @@ private:
     double tasaInteresAnual;
     // Cantidad de cuotas del préstamo
     int cantidadCuotas;
-    // Monto del préstamo (long para permita numeros grandes)
+    // Monto del préstamo (long para permitir números grandes)
     long montoPrestamo;
 };
 
-#endif
+#endif // PRESTAMO_HPP
+

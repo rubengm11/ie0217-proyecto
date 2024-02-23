@@ -1,3 +1,8 @@
+/**
+ * @file Cliente.cpp
+ * @brief Implementación de la clase Cliente
+ */
+
 #include "Cliente.hpp"
 #include <iostream>
 #include <fstream>
@@ -5,15 +10,24 @@
 #include <sstream>
 #include <vector>
 #include <string>
+using namespace std;
 
-
-// Constructor
+/**
+ * @brief Constructor de la clase Cliente
+ * @param nombre Nombre del cliente
+ * @param identificacion Número de identificación del cliente
+ * @param cuentaColones Cuenta en colones del cliente
+ * @param cuentaDolares Cuenta en dólares del cliente
+ */
 Cliente::Cliente(const std::string& nombre, const std::string& identificacion,
                  const Cuenta& cuentaColones, const Cuenta& cuentaDolares)
     : nombre(nombre), identificacion(identificacion), 
       cuentaColones(cuentaColones), cuentaDolares(cuentaDolares) {}
 
-// Métodos para depositar en cuentas ya sea en colones o en dólares
+/**
+ * @brief Método para depositar en la cuenta de colones del cliente
+ * @param cantidad Cantidad a depositar
+ */
 void Cliente::depositarEnCuentaColones(double cantidad) {
     if (cantidad > 0) {
         cuentaColones.depositar(cantidad);
@@ -26,6 +40,10 @@ void Cliente::depositarEnCuentaColones(double cantidad) {
     }
 }
 
+/**
+ * @brief Método para depositar en la cuenta de dólares del cliente
+ * @param cantidad Cantidad a depositar
+ */
 void Cliente::depositarEnCuentaDolares(double cantidad) {
     if (cantidad > 0) {
         cuentaDolares.depositar(cantidad);
@@ -38,7 +56,11 @@ void Cliente::depositarEnCuentaDolares(double cantidad) {
     }
 }
 
-// Métodos para retirar de cuentas
+/**
+ * @brief Método para retirar de la cuenta de colones del cliente
+ * @param cantidad Cantidad a retirar
+ * @return True si el retiro fue exitoso, False si hubo un error
+ */
 bool Cliente::retirarDeCuentaColones(double cantidad) {
     if (cantidad > 0) {
         if (cuentaColones.retirar(cantidad)) {
@@ -56,6 +78,11 @@ bool Cliente::retirarDeCuentaColones(double cantidad) {
     return false;
 }
 
+/**
+ * @brief Método para retirar de la cuenta de dólares del cliente
+ * @param cantidad Cantidad a retirar
+ * @return True si el retiro fue exitoso, False si hubo un error
+ */
 bool Cliente::retirarDeCuentaDolares(double cantidad) {
     if (cantidad > 0) {
         if (cuentaDolares.retirar(cantidad)) {
@@ -73,7 +100,10 @@ bool Cliente::retirarDeCuentaDolares(double cantidad) {
     return false;
 }
 
-// Método para solicitar préstamos
+/**
+ * @brief Método para solicitar un préstamo
+ * @param monto Monto del préstamo solicitado
+ */
 void Cliente::solicitarPrestamo(double monto) {
     if (monto > 0) {
         // Aquí se añade lógica para solicitar y aprobar el préstamo
@@ -85,7 +115,9 @@ void Cliente::solicitarPrestamo(double monto) {
 }
 
 
-// Método para mostrar información del cliente
+/**
+ * @brief Método para mostrar la información del cliente
+ */
 void Cliente::mostrarInformacion() const {
     std::cout << "Información del Cliente:" << std::endl;
     std::cout << "Nombre: " << nombre << std::endl;
@@ -95,9 +127,9 @@ void Cliente::mostrarInformacion() const {
     // Mostrar información de préstamos si es necesario ........... workinggg
 }
 
-using namespace std;
-
-
+/**
+ * @brief Método para actualizar el archivo de clientes después de una transacción
+ */
 void Cliente::actualizarArchivo() {
     std::vector<std::string> lineas;
     std::ifstream archivoLectura("./src/clientes.csv");

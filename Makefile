@@ -2,7 +2,6 @@ CC = g++
 CFLAGS = -std=c++11
 SRC_DIR = src
 TARGET = programa_bancario
-# Asegúrate de que cada archivo fuente esté incluido aquí
 SRCS = $(SRC_DIR)/menu.cpp $(SRC_DIR)/funciones.cpp $(SRC_DIR)/Prestamo.cpp \
        $(SRC_DIR)/Cliente.cpp $(SRC_DIR)/Cuenta.cpp $(SRC_DIR)/CDP.cpp
 

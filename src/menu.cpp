@@ -1,9 +1,18 @@
+/**
+ * @file main.cpp
+ * @brief Programa principal que gestiona el menú del programa bancario
+ */
+
 #include <iostream>
 #include "funciones.hpp"
 #include <limits>
 
 using namespace std;
 
+/**
+ * @brief Función principal que muestra el menú y gestiona las opciones del usuario
+ * @return 0 al salir del programa
+ */
 int main() {
     int opcion;
 
@@ -38,4 +47,5 @@ int main() {
 
     return 0;
 }
+
 

@@ -22,3 +22,15 @@ Tipo de operacion: Deposito
 ID cliente: 007
 Moneda: Dolares
 Monto: 5000
+
+Tipo de operación: Creación de Certificado de Depósito a Plazo
+Identificación: 007
+Moneda: 0
+Monto: 5000
+Plazo: 23
+Interés: 4
+
+Tipo de operacion: Deposito
+ID cliente: 006
+Moneda: Colones
+Monto: 5000
